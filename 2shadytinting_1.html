@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2ShadyTinting - Window Tinting & Detailing</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red: #e8001c; --dark: #0a0a0a; --gray-dark: #111; --gray-mid: #1a1a1a; --gray-light: #f0f0f0; --white: #ffffff; --pink: #d4006a; }
+  body { font-family: 'Barlow', sans-serif; background: var(--dark); color: var(--white); overflow-x: hidden; }
+  nav { background: #0d0d0d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 70px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: flex; align-items: center; }
+  .nav-logo img { height: 60px; width: auto; object-fit: contain; display: block; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: #ccc; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--red); }
+  .nav-phone { background: var(--red); color: #fff; padding: 10px 20px; border-radius: 4px; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-address { color: #888; font-size: 12px; text-align: right; }
+  .nav-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .hero { position: relative; min-height: 520px; overflow: hidden; background: #0d0d0d; display: flex; align-items: center; }
+  .hero-bg { position: absolute; inset: 0; overflow: hidden; }
+  .hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .hero-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.45) 100%); z-index: 1; pointer-events: none; }
+  .hero-bg::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 180px; background: radial-gradient(ellipse at 30% 100%, rgba(180,10,10,0.35) 0%, transparent 70%); z-index: 1; pointer-events: none; }
+  .hero-content { position: relative; z-index: 2; padding: 60px 60px; max-width: 600px; }
+  .hero-eyebrow { display: flex; gap: 16px; margin-bottom: 20px; }
+  .hero-eyebrow span { font-size: 11px; letter-spacing: 2px; color: #bbb; text-transform: uppercase; }
+  .hero-eyebrow span::after { content: '•'; margin-left: 16px; color: var(--red); }
+  .hero-eyebrow span:last-child::after { display: none; }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: 64px; font-weight: 800; line-height: 1; text-transform: uppercase; margin-bottom: 10px; }
+  .hero h1 .accent { color: var(--red); display: block; }
+  .hero-sub { color: #ccc; font-size: 15px; margin-bottom: 32px; letter-spacing: 0.5px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary { background: var(--red); color: #fff; padding: 14px 28px; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
+  .btn-primary:hover { background: #c0001a; }
+  .btn-outline { background: transparent; color: #fff; padding: 13px 28px; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; border: 2px solid #fff; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+  .btn-outline:hover { background: #fff; color: #000; }
+  .badges { background: #111; border-top: 2px solid #222; display: flex; justify-content: center; }
+  .badges-inner { display: flex; gap: 0; width: 100%; max-width: 1200px; }
+  .badge { flex: 1; display: flex; align-items: center; gap: 10px; padding: 18px 30px; border-right: 1px solid #222; }
+  .badge:last-child { border-right: none; }
+  .badge-icon { width: 20px; height: 20px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
+  .badge span { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #ddd; }
+  /* ── SERVICES ── */
+  .services { padding: 72px 48px; background: #1a1a1a; }
+  .services-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .section-label { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+  .services-left h2 { font-family: 'Oswald', sans-serif; font-size: clamp(36px, 4vw, 54px); font-weight: 700; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; }
+  .services-left p { font-size: 15px; color: #aaa; line-height: 1.7; margin-bottom: 36px; max-width: 420px; }
+  .trust-badges { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #2a2a2a; padding-top: 28px; }
+  .badge-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #aaa; }
+  .badge-item svg { color: var(--red); flex-shrink: 0; }
+  .services-right { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .service-card-link { text-decoration: none; color: inherit; display: block; }
+  .service-card { background: #222; border: 1px solid #2e2e2e; border-radius: 6px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .service-card:hover { border-color: var(--red); transform: translateY(-4px); }
+  .card-video { width: 100%; height: 140px; overflow: hidden; position: relative; background: #000; }
+  .card-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-body { padding: 16px; }
+  .card-icon { width: 36px; height: 36px; background: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .card-icon svg { color: #fff; }
+  .card-body h3 { font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .card-body ul { list-style: none; padding: 0; }
+  .card-body ul li { font-size: 12px; color: #999; padding: 3px 0; padding-left: 14px; position: relative; line-height: 1.5; }
+  .card-body ul li::before { content: '•'; color: var(--red); position: absolute; left: 0; }
+  .packages { background: #f4f4f4; padding: 70px 40px; }
+  .packages-header { text-align: center; margin-bottom: 50px; }
+  .packages-header .section-title { font-family: 'Oswald', sans-serif; font-size: 48px; color: var(--dark); font-weight: 700; margin-bottom: 8px; }
+  .packages-header .section-title span { color: var(--red); }
+  .packages-header .subtitle { font-style: italic; color: #666; font-size: 15px; margin-bottom: 8px; }
+  .packages-header .desc { color: var(--dark); font-size: 17px; font-weight: 500; }
+  .pkg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+  .pkg-card { background: #fff; border: 1px solid #ddd; padding: 30px 24px; border-radius: 4px; }
+  .pkg-logo { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .pkg-logo .two { color: var(--red); }
+  .pkg-name { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; color: var(--dark); margin-bottom: 12px; }
+  .pkg-desc { color: #666; font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
+  .btn-pkg { background: var(--red); color: #fff; padding: 11px 24px; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer; border-radius: 3px; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn-pkg:hover { background: #c0001a; }
+  .why { background: var(--dark); padding: 80px 0; position: relative; overflow: hidden; }
+  .why::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(232,0,28,0.08) 0%, transparent 70%); }
+  .why-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .why-section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+  .why-content .accent-label { color: var(--red); font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .why-content h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; text-transform: uppercase; line-height: 1.2; margin-bottom: 20px; }
+  .why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-top: 20px; }
+  .why-feature { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #bbb; }
+  .why-feature::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .why-car-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .why-car-wrap img { width: 100%; border-radius: 8px; filter: drop-shadow(0 20px 60px rgba(232,0,28,0.3)); }
+  .why-car-wrap video { width: 100%; border-radius: 8px; display: block; filter: drop-shadow(0 20px 60px rgba(232,0,28,0.3)); object-fit: cover; }
+  .ppi { background: #f4f4f4; padding: 70px 40px; }
+  .ppi-title { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; text-align: center; color: var(--dark); margin-bottom: 50px; }
+  .ppi-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .ppi-options { display: flex; flex-direction: column; gap: 0; }
+  .ppi-option { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #ddd; cursor: pointer; transition: background 0.15s; }
+  .ppi-option:hover { background: #e8e8e8; }
+  .ppi-option.active { background: #fff; border-left: 3px solid var(--red); }
+  .ppi-option img { width: 80px; height: 50px; object-fit: cover; border-radius: 4px; }
+  .ppi-option-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; color: var(--dark); }
+  .ppi-option-arrow { margin-left: auto; color: var(--red); font-weight: 700; }
+  .ppi-detail { background: #fff; padding: 40px; border-radius: 4px; }
+  .ppi-detail h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; text-transform: uppercase; color: var(--dark); margin-bottom: 20px; }
+  .ppi-items { list-style: none; margin-bottom: 30px; }
+  .ppi-items li { padding: 8px 0; font-size: 14px; color: #444; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .ppi-items li::before { content: '—'; color: var(--pink); font-weight: 700; }
+  /* ── REVIEWS ── */
+  .reviews { background: #111; padding: 80px 48px; }
+  .reviews-inner { max-width: 1280px; margin: 0 auto; }
+  .reviews-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+  .reviews-top h2 { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 4vw, 48px); font-weight: 700; text-transform: uppercase; line-height: 1.05; }
+  .reviews-top h2 em { color: var(--red); font-style: normal; }
+  .reviews-rating { display: flex; align-items: center; gap: 14px; }
+  .reviews-score { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 800; color: #fff; line-height: 1; }
+  .reviews-stars { font-size: 22px; color: #f5c518; letter-spacing: 2px; margin-bottom: 4px; }
+  .reviews-count { font-size: 12px; color: #777; letter-spacing: 1px; text-transform: uppercase; }
+  .reviews-cta { margin-top: 48px; text-align: center; }
+  /* carousel */
+  .carousel-wrap { position: relative; overflow: hidden; }
+  .carousel-track { display: flex; gap: 20px; transition: transform 0.45s cubic-bezier(.4,0,.2,1); will-change: transform; }
+  .review-card { background: #1c1c1c; border: 1px solid #2e2e2e; border-radius: 8px; padding: 28px 24px; flex: 0 0 calc(33.333% - 14px); display: flex; flex-direction: column; gap: 14px; transition: border-color 0.2s; }
+  .review-card:hover { border-color: var(--red); }
+  .rc-top { display: flex; align-items: center; gap: 12px; }
+  .rc-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .rc-name { font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+  .rc-date { font-size: 11px; color: #666; margin-top: 2px; }
+  .rc-stars { font-size: 15px; color: #f5c518; letter-spacing: 2px; }
+  .rc-text { font-size: 13px; color: #bbb; line-height: 1.75; font-style: italic; flex: 1; }
+  .rc-text::before { content: '\201C'; }
+  .rc-text::after { content: '\201D'; }
+  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 36px; }
+  .carousel-btn { width: 42px; height: 42px; border: 2px solid #333; border-radius: 50%; background: transparent; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+  .carousel-btn:hover { border-color: var(--red); background: var(--red); }
+  .carousel-dots { display: flex; gap: 8px; }
+  .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: #333; border: none; cursor: pointer; padding: 0; transition: background 0.2s; }
+  .carousel-dot.active { background: var(--red); }
+  footer { background: #080808; border-top: 3px solid var(--red); padding: 60px 40px 0; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; padding-bottom: 50px; }
+  .footer-brand .brand-name { font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700; }
+  .footer-brand .brand-name span { color: var(--red); }
+  .footer-brand .brand-tag { font-size: 11px; letter-spacing: 2px; color: #666; text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .footer-brand p { color: #777; font-size: 13px; line-height: 1.8; max-width: 280px; margin-bottom: 24px; }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-btn { width: 36px; height: 36px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #888; font-size: 13px; text-decoration: none; transition: all 0.2s; font-weight: 700; }
+  .social-btn:hover { border-color: var(--red); color: var(--red); }
+  .footer-col h5 { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { color: #777; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--red); }
+  .footer-contact-item { display: flex; gap: 10px; margin-bottom: 14px; }
+  .footer-contact-item .icon { color: var(--red); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .footer-contact-item span { color: #777; font-size: 13px; line-height: 1.6; }
+  .footer-bottom { border-top: 1px solid #1a1a1a; padding: 20px 40px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { color: #555; font-size: 12px; }
+  .footer-bottom .credits { display: flex; gap: 20px; }
+  .footer-bottom .credits a { color: #555; font-size: 12px; text-decoration: none; }
+  .footer-bottom .credits a:hover { color: var(--red); }
+
+  /* ── HAMBURGER ── */
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 6px; z-index: 200; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; inset: 70px 0 0 0; background: #0d0d0d; z-index: 99; flex-direction: column; padding: 32px 28px; gap: 0; border-top: 1px solid #222; overflow-y: auto; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: #ccc; text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 16px 0; border-bottom: 1px solid #1e1e1e; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--red); }
+  .mobile-menu .mobile-phone { margin-top: 28px; background: var(--red); color: #fff; padding: 14px 20px; border-radius: 4px; text-align: center; font-weight: 700; font-size: 15px; border-bottom: none; }
+  .mobile-menu .mobile-addr { color: #666; font-size: 12px; margin-top: 14px; text-align: center; border-bottom: none; padding: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    /* nav */
+    .nav-links, .nav-right { display: none; }
+    .nav-hamburger { display: flex; }
+    nav { padding: 0 20px; }
+
+    /* hero */
+    .hero { min-height: 420px; }
+    .hero-content { padding: 40px 24px; max-width: 100%; }
+    .hero h1 { font-size: 44px; }
+
+    /* badges */
+    .badges-inner { flex-wrap: wrap; }
+    .badge { flex: 1 1 calc(50% - 1px); border-bottom: 1px solid #222; }
+    .badge:nth-child(2) { border-right: none; }
+
+    /* services */
+    .services { padding: 52px 24px; }
+    .services-inner { grid-template-columns: 1fr; gap: 40px; }
+    .services-right { grid-template-columns: 1fr; }
+    .card-video { height: 180px; }
+
+    /* packages */
+    .packages { padding: 52px 24px; }
+    .pkg-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* why */
+    .why { padding: 60px 0; }
+    .why-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
+    .why-car-wrap { order: -1; }
+    .why-section-title { font-size: 38px; }
+    div[style*="padding:0 40px"] { padding: 0 24px !important; }
+
+    /* ppi */
+    .ppi { padding: 52px 24px; }
+    .ppi-title { font-size: 28px; letter-spacing: 1px; }
+    .ppi-inner { grid-template-columns: 1fr; gap: 32px; }
+
+    /* reviews */
+    .reviews { padding: 60px 24px; }
+    .reviews-top { flex-direction: column; align-items: flex-start; }
+
+    /* footer */
+    footer { padding: 48px 24px 0; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .footer-bottom { padding: 20px 0; flex-direction: column; gap: 10px; text-align: center; }
+    .footer-bottom .credits { flex-wrap: wrap; justify-content: center; }
+  }
+
+  @media (max-width: 560px) {
+    /* hero */
+    .hero { min-height: 360px; }
+    .hero h1 { font-size: 36px; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+
+    /* badges */
+    .badge { flex: 1 1 100%; border-right: none; }
+
+    /* packages */
+    .pkg-grid { grid-template-columns: 1fr; }
+
+    /* why features */
+    .why-features { grid-template-columns: 1fr; }
+
+    /* ppi options */
+    .ppi-option img { width: 60px; height: 38px; }
+
+    /* footer */
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="Logo_2shady.png" alt="2ShadyTinting" /></a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="services.html">Services</a><a href="why-2shady.html">Why 2Shady</a><a href="gallery.html">Gallery</a><a href="reviews.html">Reviews</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:6178280887" class="nav-phone">📞 (617) 828-0887</a>
+    <div class="nav-address">📍 1181 Main St, Brockton, MA 02301</div>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="why-2shady.html">Why 2Shady</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="tel:6178280887" class="mobile-phone">📞 (617) 828-0887</a>
+  <span class="mobile-addr">📍 1181 Main St, Brockton, MA 02301</span>
+</div>
+<section class="hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline>
+      <source src="https://assets.mixkit.co/videos/47831/47831-720.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span>Precision</span><span>Protection</span><span>Performance</span></div>
+    <h1>Premium Window Tinting<span class="accent">&amp; Auto Detailing</span></h1>
+    <p class="hero-sub">Enhance Style. Maximize Comfort. Protect What Matters.</p>
+    <div class="hero-btns">
+      <a href="appointment.html" class="btn-primary">Book an Appointment &rsaquo;</a>
+      <a href="appointment.html" class="btn-outline">Get a Free Quote &rsaquo;</a>
+    </div>
+  </div>
+</section>
+<div class="badges">
+  <div class="badges-inner">
+    <div class="badge"><div class="badge-icon"></div><span>Professional Installation</span></div>
+    <div class="badge"><div class="badge-icon"></div><span>Premium Ceramic &amp; Dyed Films</span></div>
+    <div class="badge"><div class="badge-icon"></div><span>Paint Protection &amp; Detailing</span></div>
+    <div class="badge"><div class="badge-icon"></div><span>Mobile Services</span></div>
+  </div>
+</div>
+<section class="services" id="services">
+  <div class="services-inner">
+    <!-- Left copy -->
+    <div class="services-left">
+      <p class="section-label">Our Services</p>
+      <h2>Protect &amp; Elevate</h2>
+      <p>Expert window tinting and detailing services designed for style, comfort, and long-lasting protection.</p>
+      <div class="trust-badges">
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+          Licensed &amp; Insured
+        </div>
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+          High-Quality Materials
+        </div>
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+          Satisfaction Guaranteed
+        </div>
+      </div>
+    </div>
+    <!-- Right cards -->
+    <div class="services-right">
+      <!-- Window Tinting -->
+      <a href="window-tinting.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47834/47834-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>Window Tinting</h3>
+            <ul>
+              <li>Ceramic Window Tint</li>
+              <li>Dye &amp; Carbon Films</li>
+              <li>UV &amp; Heat Rejection</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+      <!-- Paint Protection -->
+      <a href="paint-protection.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47830/47830-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C6 2 4 7 4 12s2 10 8 10 8-5 8-10S18 2 12 2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Paint Protection</h3>
+            <ul>
+              <li>Ceramic Coatings</li>
+              <li>Paint Correction</li>
+              <li>Gloss Enhancement</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+      <!-- Auto Detailing -->
+      <a href="auto-detailing.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47832/47832-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <h3>Auto Detailing</h3>
+            <ul>
+              <li>Interior Deep Clean</li>
+              <li>Exterior Wash &amp; Wax</li>
+              <li>Full Vehicle Detailing</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="packages">
+  <div class="packages-header">
+    <div class="section-title"><span>2Shady</span> Packages</div>
+    <div class="subtitle">Precision • Protection • Performance</div>
+    <div class="desc">Enhance Style. Maximize Comfort. Protect What Matters.</div>
+  </div>
+  <div class="pkg-grid">
+    <div class="pkg-card"><div class="pkg-logo"><span class="two">2</span>Shady</div><div class="pkg-name">Gold Package</div><p class="pkg-desc">The 2Shady Gold package is perfect for most car owners and includes a 5-year warranty.</p><a href="services.html#gold" class="btn-pkg">Learn More</a></div>
+    <div class="pkg-card"><div class="pkg-logo"><span class="two">2</span>Shady</div><div class="pkg-name">Silver Package</div><p class="pkg-desc">The 2Shady Silver package is perfect for most car owners and includes a 5-year warranty.</p><a href="services.html#silver" class="btn-pkg">Learn More</a></div>
+    <div class="pkg-card"><div class="pkg-logo"><span class="two">2</span>Shady</div><div class="pkg-name">Bronze Package</div><p class="pkg-desc">The 2Shady Bronze package is a great value. It comes with a 5-year warranty.</p><a href="services.html#bronze" class="btn-pkg">Learn More</a></div>
+    <div class="pkg-card"><div class="pkg-logo"><span class="two">2</span>Shady</div><div class="pkg-name">Sport Package</div><p class="pkg-desc">The 2Shady Sport package is great for those new to paint protection.</p><a href="services.html#sport" class="btn-pkg">Learn More</a></div>
+  </div>
+</section>
+<section class="why">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+    <h2 class="why-section-title" style="margin-bottom:50px;">Why Choose Us?</h2>
+  </div>
+  <div class="why-inner">
+    <div class="why-content">
+      <span class="accent-label">Unmatched Quality of Service</span>
+      <h3>At 2ShadyTinting, We Deliver a Premium Quality Service, and Our Reputation Speaks for Itself.</h3>
+      <div class="why-features">
+        <div class="why-feature">Highest quality paint coating products</div>
+        <div class="why-feature">Luxury auto detailing service</div>
+        <div class="why-feature">Best all-round clear bra materials</div>
+        <div class="why-feature">Concours level paint correction available</div>
+        <div class="why-feature">Most experienced technicians</div>
+        <div class="why-feature">We detail some of your area's best vehicles</div>
+      </div>
+    </div>
+    <div class="why-car-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/49197/49197-720.mp4" type="video/mp4" />
+        <source src="https://assets.mixkit.co/videos/45755/45755-720.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</section>
+<section class="ppi">
+  <h2 class="ppi-title">Paint Protection Installation</h2>
+  <div class="ppi-inner">
+    <div class="ppi-options">
+      <div class="ppi-option"><img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=160&q=70" alt="Full Car"><span class="ppi-option-label">Full Car</span><span class="ppi-option-arrow">&#9658;</span></div>
+      <div class="ppi-option"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=160&q=70" alt="Full Front"><span class="ppi-option-label">Full Front</span><span class="ppi-option-arrow">&#9658;</span></div>
+      <div class="ppi-option active"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=160&q=70" alt="Front Bumper"><span class="ppi-option-label">Front Bumper</span><span class="ppi-option-arrow">&#9658;</span></div>
+      <div class="ppi-option"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=160&q=70" alt="Partial Front"><span class="ppi-option-label">Partial Front</span><span class="ppi-option-arrow">&#9658;</span></div>
+    </div>
+    <div class="ppi-detail">
+      <h4>Front Bumper</h4>
+      <ul class="ppi-items"><li>Full Front Bumper</li><li>Headlights</li><li>Fog Lights</li></ul>
+      <a href="paint-protection.html" class="btn-pkg">Learn More</a>
+      <div style="margin-top:20px;"><img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&q=80" alt="Vehicle" style="width:100%;border-radius:6px;"></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-top">
+      <div>
+        <p class="section-label">What Our Customers Say</p>
+        <h2>Trusted by <em>Hundreds</em> of Vehicle Owners</h2>
+      </div>
+      <div class="reviews-rating">
+        <div class="reviews-score">4.9</div>
+        <div>
+          <div class="reviews-stars">★★★★★</div>
+          <div class="reviews-count">518 Google Reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="reviewTrack">
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">J</div><div><div class="rc-name">Jason M.</div><div class="rc-date">2 weeks ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Absolutely incredible work. Brought my BMW in for ceramic tint and the results are flawless. The shop is clean, professional, and they took the time to explain every step. Will not go anywhere else.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">S</div><div><div class="rc-name">Stephanie R.</div><div class="rc-date">1 month ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">I got paint protection film on my new Audi and they did an outstanding job. Zero bubbles, perfect edges, and the team was super knowledgeable. Highly recommend 2Shady to anyone serious about protecting their vehicle.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">M</div><div><div class="rc-name">Marcus T.</div><div class="rc-date">3 weeks ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Best tint shop in the area, hands down. My Dodge Charger looks amazing. The ceramic tint keeps the car so much cooler and the install was perfect. Quick turnaround too — done same day.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">A</div><div><div class="rc-name">Aaliyah C.</div><div class="rc-date">5 days ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">I've been going to 2Shady for years. Had my second car done here and the quality never disappoints. Professional from start to finish. The owner really cares about the work and it shows.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">D</div><div><div class="rc-name">Derek F.</div><div class="rc-date">2 months ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Came in for a full detail and ceramic coating. The transformation was unreal — my truck looked better than the day I bought it. Pricing is fair for the quality you get. Absolutely worth it.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">L</div><div><div class="rc-name">Lisa N.</div><div class="rc-date">1 month ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Super friendly staff and great communication throughout. They walked me through the tint options and helped me pick the right shade for my SUV. The finished product is gorgeous. Definitely coming back for the detailing package.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">R</div><div><div class="rc-name">Ryan P.</div><div class="rc-date">3 months ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Had PPF installed on my new Mustang GT. The attention to detail was insane — every edge was perfect. These guys know what they're doing. Highly recommend if you care about keeping your car looking new.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">K</div><div><div class="rc-name">Kendra W.</div><div class="rc-date">6 weeks ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Booked an appointment online, dropped off my car, and picked it up looking incredible. The tint is clean, dark, and exactly what I asked for. Great experience from beginning to end — 10/10.</div></div>
+        <div class="review-card"><div class="rc-top"><div class="rc-avatar">T</div><div><div class="rc-name">Tony B.</div><div class="rc-date">2 weeks ago</div></div></div><div class="rc-stars">★★★★★</div><div class="rc-text">Took my Tesla Model 3 here for full ceramic tint. Outstanding results and the heat rejection is incredible. The shop is professional, the work is top-tier, and the team is easy to work with. Already referred three friends.</div></div>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="reviewPrev" aria-label="Previous">&#8592;</button>
+      <div class="carousel-dots" id="reviewDots"></div>
+      <button class="carousel-btn" id="reviewNext" aria-label="Next">&#8594;</button>
+    </div>
+    <div class="reviews-cta">
+      <a href="reviews.html" class="btn-outline">See All Reviews &rsaquo;</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const track = document.getElementById('reviewTrack');
+  const prevBtn = document.getElementById('reviewPrev');
+  const nextBtn = document.getElementById('reviewNext');
+  const dotsWrap = document.getElementById('reviewDots');
+  const cards = track.querySelectorAll('.review-card');
+  let perView = 3, current = 0, autoTimer;
+
+  function getPerView() {
+    return window.innerWidth < 700 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+  }
+
+  function totalSlides() { return cards.length - perView; }
+
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    const count = totalSlides() + 1;
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === current ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  function goTo(n) {
+    const max = totalSlides();
+    current = Math.max(0, Math.min(n, max));
+    const cardWidth = cards[0].offsetWidth + 20;
+    track.style.transform = 'translateX(-' + (current * cardWidth) + 'px)';
+    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function init() {
+    perView = getPerView();
+    const pct = 100 / perView;
+    cards.forEach(c => { c.style.flex = '0 0 calc(' + pct + '% - ' + (20 * (perView - 1) / perView) + 'px)'; });
+    if (current > totalSlides()) current = 0;
+    buildDots();
+    goTo(current);
+  }
+
+  prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+  nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => { goTo(current < totalSlides() ? current + 1 : 0); }, 5000);
+  }
+
+  window.addEventListener('resize', init);
+  init();
+  resetAuto();
+})();
+</script>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logo_2shady.png" alt="2ShadyTinting" style="height:70px;width:auto;margin-bottom:16px;display:block;">
+      <span class="brand-tag">Window Tinting &amp; Detailing</span>
+      <p>We are a premium window tinting and auto detailing company committed to delivering flawless results and protecting your vehicle investment.</p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/2shadytinting" class="social-btn" target="_blank" rel="noopener">f</a>
+        <a href="https://www.instagram.com/2shadytinting/" class="social-btn" target="_blank" rel="noopener">ig</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul><li><a href="window-tinting.html">Window Tinting</a></li><li><a href="paint-protection.html">Paint Protection Film</a></li><li><a href="ceramic-tint.html">Ceramic Coating</a></li><li><a href="auto-detailing.html">Auto Detailing</a></li><li><a href="services.html#mobile">Mobile Services</a></li><li><a href="services.html#fleet">Fleet Services</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul><li><a href="why-2shady.html">About Us</a></li><li><a href="why-2shady.html">Why 2Shady</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="reviews.html">Reviews</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <div class="footer-contact-item"><span class="icon">📍</span><span>1181 Main St, Brockton, MA 02301</span></div>
+      <div class="footer-contact-item"><span class="icon">📞</span><span><a href="tel:6178280887" style="color:#777;text-decoration:none;">(617) 828-0887</a></span></div>
+      <div class="footer-contact-item"><span class="icon">✉️</span><span><a href="mailto:info@2shadytinting.com" style="color:#777;text-decoration:none;">info@2shadytinting.com</a></span></div>
+      <div class="footer-contact-item"><span class="icon">🕐</span><span>Mon–Sat: 8am – 6pm<br>Sun: By Appointment</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 2ShadyTinting. All rights reserved.</p>
+    <div class="credits"><a href="privacy.html">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Sitemap</a></div>
+  </div>
+</footer>
+<script>
+(function(){
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', function(){
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

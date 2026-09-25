@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book a window tinting, ceramic coating, or auto detailing appointment with 2 Shady Tinting in Brockton, MA. Same-day & next-day availability. Free quotes. Call (617) 828-0887." />
+  <meta name="keywords" content="window tinting, ceramic tint, auto detailing, paint protection, ceramic coating, car window tint, UV protection, heat rejection, window tinting Brockton MA, 2 Shady Tinting, tint shop near me, car detailing Brockton, paint correction, PPF, paint protection film, paintless dent removal, remote start installation, headlight restoration, wheel repair, vinyl graphics, window film, 2shadytinting" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Book an Appointment | 2Shady Tinting — Brockton, MA" />
+  <meta property="og:description" content="Book a window tinting, ceramic coating, or auto detailing appointment with 2 Shady Tinting in Brockton, MA. Same-day & next-day availability. Free quotes. Call (617) 828-0887." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.2shadytinting.com/" />
+  <meta property="og:image" content="Logo_2shady.png" />
+  <title>Book an Appointment | 2Shady Tinting — Brockton, MA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #cc1111;
+      --red-hover: #e01515;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --dark4: #2a2a2a;
+      --white: #ffffff;
+      --gray: #aaaaaa;
+      --green: #1fcc6a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: #0d0d0d;
+      border-bottom: 1px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px;
+    }
+
+    .logo-wrap { display: flex; flex-direction: column; line-height: 1; }
+    .logo-wrap a { display: flex; line-height: 0; }
+    .logo-wrap img { height: 67px; width: auto; object-fit: contain; }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--red); }
+
+    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+    .btn-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--red);
+      border-radius: 4px;
+      padding: 10px 20px;
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+
+    .btn-phone:hover { background: var(--red); }
+    .btn-phone svg { flex-shrink: 0; }
+
+    .header-address {
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-address svg { color: var(--red); flex-shrink: 0; }
+
+    /* ─── PAGE HERO ──────────────────────────────────── */
+    .page-hero {
+      position: relative;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .page-hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+    }
+
+    .page-hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(transparent, var(--dark));
+      pointer-events: none;
+    }
+
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .page-hero-content h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+    }
+
+    .page-hero-content h1 em { color: var(--red); font-style: normal; }
+
+    .page-hero-content p {
+      font-size: 15px;
+      color: #cccccc;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--red);
+      margin: 16px auto 0;
+    }
+
+    /* ─── BOOKING LAYOUT ─────────────────────────────── */
+    .booking-section {
+      padding: 72px 48px;
+      background: var(--dark2);
+    }
+
+    .booking-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ─── FORM ───────────────────────────────────────── */
+    .form-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 40px;
+    }
+
+    .form-card h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .form-card h2 em { color: var(--red); font-style: normal; }
+
+    .form-card > p {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-row .form-group { margin-bottom: 0; }
+
+    label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    label .req { color: var(--red); margin-left: 2px; }
+
+    input, select, textarea {
+      background: var(--dark4);
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      color: var(--white);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 14px;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: #555; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(204,17,17,0.12);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23aaa' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    select option { background: var(--dark3); }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid #2a2a2a;
+      margin: 24px 0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: 2px solid var(--red);
+      border-radius: 6px;
+      padding: 16px 28px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+    }
+
+    .submit-btn:hover { background: var(--red-hover); border-color: var(--red-hover); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Spinner */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── FORM SUCCESS / ERROR STATES ────────────────── */
+    .form-feedback {
+      display: none;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 16px;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .form-feedback.success {
+      background: rgba(31,204,106,0.1);
+      border: 1px solid rgba(31,204,106,0.3);
+      color: #1fcc6a;
+    }
+
+    .form-feedback.error {
+      background: rgba(204,17,17,0.1);
+      border: 1px solid rgba(204,17,17,0.35);
+      color: #ff6060;
+    }
+
+    .form-feedback svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* Success overlay (replaces form on success) */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(31,204,106,0.12);
+      border: 2px solid rgba(31,204,106,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .success-icon svg { color: #1fcc6a; }
+
+    .success-overlay h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .success-overlay p {
+      font-size: 14px;
+      color: var(--gray);
+      max-width: 340px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover { color: var(--white); }
+
+    /* ─── SIDEBAR ─────────────────────────────────────── */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+    .info-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    .info-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .info-card h3 em { color: var(--red); font-style: normal; }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .info-row:last-child { margin-bottom: 0; }
+
+    .info-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(204,17,17,0.12);
+      border: 1px solid rgba(204,17,17,0.3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-icon svg { color: var(--red); }
+
+    .info-text .label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .info-text .value {
+      font-size: 14px;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .info-text a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .info-text a:hover { color: var(--red); }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid #2a2a2a;
+      color: var(--gray);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: #cccccc; }
+    .hours-row .open { color: var(--green); }
+    .hours-row .closed { color: #555; }
+
+    /* Trust list */
+    .trust-list { list-style: none; padding: 0; }
+
+    .trust-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #aaaaaa;
+      padding: 6px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .trust-list li:last-child { border-bottom: none; }
+    .trust-list li svg { color: var(--red); flex-shrink: 0; }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+        .footer-strip {
+      background: #0a0a0a;
+      border-top: 1px solid #222;
+      padding: 18px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    .footer-strip span { color: var(--red); margin: 0 10px; }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 14px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid #1e1e1e;
+      padding-top: 12px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #444444;
+      text-transform: none;
+    }
+
+    .footer-bottom a { color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: #aaaaaa; }
+
+    .footer-social { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+
+    .footer-social a {
+      color: #555555;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .footer-social a:hover { color: var(--white); transform: translateY(-2px); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+      .sidebar { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
+      nav { gap: 16px; flex-wrap: wrap; }
+      .booking-section { padding: 48px 20px; }
+      .form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+      .footer-strip { padding: 16px 20px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header>
+  <div class="header-top">
+    <div class="logo-wrap">
+      <a href="index.html">
+        <img src="Logo_2shady.png" alt="2ShadyTinting" />
+      </a>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="why-2shady.html">Why 2Shady</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+    </nav>
+    <div class="header-right">
+      <a href="tel:6178280887" class="btn-phone">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+        </svg>
+        (617) 828-0887
+      </a>
+      <div class="header-address">
+        <svg width="12" height="12" fill="#cc1111" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        1181 Main St, Brockton, MA 02301
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="section-label">Schedule Your Visit</p>
+    <h1>Book an <em>Appointment</em></h1>
+    <p>Fill out the form below and we'll confirm your booking by phone or email within 24 hours.</p>
+    <div class="hero-divider"></div>
+  </div>
+</section>
+
+<!-- ═══ BOOKING SECTION ════════════════════════════════════ -->
+<section class="booking-section">
+  <div class="booking-inner">
+
+    <!-- ── FORM ── -->
+    <div class="form-card">
+      <h2>Request an <em>Appointment</em></h2>
+      <p>Fields marked <span style="color:var(--red)">*</span> are required. We'll reach out within 24 hours to confirm.</p>
+
+      <!-- Success overlay (shown after submit) -->
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <h3>Appointment Requested!</h3>
+        <p id="successMsg">Thanks! We'll be in touch shortly to confirm your appointment.</p>
+        <a href="index.html" class="btn-back">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+
+      <!-- The form -->
+      <form id="appointmentForm" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(617) 000-0000" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" />
+        </div>
+
+        <hr class="form-divider" />
+
+        <div class="form-group">
+          <label for="service">Service Requested <span class="req">*</span></label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Select a service…</option>
+            <optgroup label="Window Tinting">
+              <option>Car Window Tinting</option>
+              <option>Ceramic Film Tinting</option>
+              <option>Glare Reduction</option>
+              <option>UV Protection Film</option>
+              <option>Commercial / Residential Tinting</option>
+            </optgroup>
+            <optgroup label="Paint & Protection">
+              <option>Ceramic Coating</option>
+              <option>Paint Correction</option>
+              <option>Auto Undercoating</option>
+              <option>Truck Undercoating</option>
+            </optgroup>
+            <optgroup label="Auto Detailing">
+              <option>Basic Detail</option>
+              <option>Standard Detail</option>
+              <option>Full Detail (Premium)</option>
+            </optgroup>
+            <optgroup label="Vehicle Enhancement">
+              <option>Vinyl Graphics / Wrap</option>
+              <option>Custom Decals</option>
+              <option>Automotive Rebadging</option>
+              <option>Headlight Restoration</option>
+              <option>Wheel Repair & Refinishing</option>
+            </optgroup>
+            <optgroup label="Tech & Repair">
+              <option>Remote Start Installation</option>
+              <option>Paintless Dent Removal</option>
+            </optgroup>
+            <option value="Other / Not Sure">Other / Not Sure</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="vehicle">Vehicle (Year, Make, Model)</label>
+          <input type="text" id="vehicle" name="vehicle" placeholder="e.g. 2021 Ford Mustang GT" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" />
+          </div>
+          <div class="form-group">
+            <label for="time">Preferred Time</label>
+            <select id="time" name="time">
+              <option value="" disabled selected>Select a time…</option>
+              <option>Morning (9am – 11am)</option>
+              <option>Midday (11am – 1pm)</option>
+              <option>Afternoon (1pm – 3pm)</option>
+              <option>Late Afternoon (3pm – 5pm)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" placeholder="Anything else we should know — shade preference, specific areas, questions…"></textarea>
+        </div>
+
+        <!-- Inline error feedback -->
+        <div class="form-feedback error" id="formError">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+          <span id="errorMsg">Please fill in all required fields.</span>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="btnLabel">Book My Appointment</span>
+          <div class="spinner" id="spinner"></div>
+          <svg id="btnArrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+
+      <!-- Contact Info -->
+      <div class="info-card">
+        <h3>Contact <em>&amp; Location</em></h3>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Phone</div>
+            <div class="value"><a href="tel:6178280887">(617) 828-0887</a></div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Address</div>
+            <div class="value">1181 Main St<br />Brockton, MA 02301</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="m22 6-10 7L2 6"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:soundzlive@yahoo.com">soundzlive@yahoo.com</a></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hours -->
+      <div class="info-card">
+        <h3>Business <em>Hours</em></h3>
+        <div class="hours-row"><span class="day">Monday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Tuesday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Wednesday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Thursday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Friday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="closed">Closed</span></div>
+      </div>
+
+      <!-- Trust -->
+      <div class="info-card">
+        <h3>Why <em>Book With Us</em></h3>
+        <ul class="trust-list">
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+            Licensed &amp; Insured
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Lifetime Warranty on All Tint
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Same-Day &amp; Next-Day Availability
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            4.9★ Google Rating
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Serving Brockton Since 1997
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<div class="footer-strip">
+  <div class="footer-top">
+    <div>
+      Locally Owned &amp; Operated
+      <span>•</span>
+      Premium Quality Guaranteed
+      <span>•</span>
+      Serving Brockton &amp; Surrounding Cities
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/2shadytinting" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/2shadytinting/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 2Shady Tinting. All rights reserved.</span>
+    <span>Designed by <a href="#" rel="noopener noreferrer">DrewBreezy Media</a></span>
+  </div>
+</div>
+
+<script>
+  // Set date input min to today
+  document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+  const form        = document.getElementById('appointmentForm');
+  const submitBtn   = document.getElementById('submitBtn');
+  const spinner     = document.getElementById('spinner');
+  const btnLabel    = document.getElementById('btnLabel');
+  const btnArrow    = document.getElementById('btnArrow');
+  const formError   = document.getElementById('formError');
+  const errorMsg    = document.getElementById('errorMsg');
+  const successOverlay = document.getElementById('successOverlay');
+  const successMsg  = document.getElementById('successMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Hide any previous error
+    formError.style.display = 'none';
+
+    // Client-side validation
+    const name    = form.name.value.trim();
+    const phone   = form.phone.value.trim();
+    const service = form.service.value;
+
+    if (!name || !phone || !service) {
+      errorMsg.textContent = 'Please fill in your name, phone number, and select a service.';
+      formError.style.display = 'flex';
+      formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+
+    // Loading state
+    submitBtn.disabled = true;
+    btnLabel.textContent = 'Sending…';
+    spinner.style.display = 'block';
+    btnArrow.style.display = 'none';
+
+    try {
+      const data = new FormData(form);
+      const res  = await fetch('form_handler.php', { method: 'POST', body: data });
+      const json = await res.json();
+
+      if (json.success) {
+        // Show success overlay, hide form
+        successMsg.textContent = json.message;
+        form.style.display = 'none';
+        successOverlay.style.display = 'flex';
+        successOverlay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        errorMsg.textContent = json.message || 'Something went wrong. Please call us directly.';
+        formError.style.display = 'flex';
+        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Reset button
+        submitBtn.disabled = false;
+        btnLabel.textContent = 'Book My Appointment';
+        spinner.style.display = 'none';
+        btnArrow.style.display = 'block';
+      }
+    } catch (err) {
+      errorMsg.textContent = 'Network error. Please call us at (617) 828-0887.';
+      formError.style.display = 'flex';
+      submitBtn.disabled = false;
+      btnLabel.textContent = 'Book My Appointment';
+      spinner.style.display = 'none';
+      btnArrow.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>

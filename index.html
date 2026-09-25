@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="2 Shady Tinting & Detailing — Brockton's premier automotive window tinting shop. Ceramic tint, paint protection, auto detailing, ceramic coatings & more. 20+ years serving Brockton, MA. Free quotes. Call (617) 828-0887." />
+  <meta name="keywords" content="window tinting, ceramic tint, auto detailing, paint protection, ceramic coating, car window tint, UV protection, heat rejection, window tinting Brockton MA, 2 Shady Tinting, tint shop near me, car detailing Brockton, paint correction, PPF, paint protection film, paintless dent removal, remote start installation, headlight restoration, wheel repair, vinyl graphics, window film, 2shadytinting" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="2Shady Tinting | Window Tinting & Auto Detailing — Brockton, MA" />
+  <meta property="og:description" content="2 Shady Tinting & Detailing — Brockton's premier automotive window tinting shop. Ceramic tint, paint protection, auto detailing, ceramic coatings & more. 20+ years serving Brockton, MA. Free quotes. Call (617) 828-0887." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.2shadytinting.com/" />
+  <meta property="og:image" content="Logo_2shady.png" />
+  <title>2Shady Tinting | Window Tinting & Auto Detailing — Brockton, MA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #cc1111;
+      --red-hover: #e01515;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --dark4: #2a2a2a;
+      --white: #ffffff;
+      --gray: #aaaaaa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: #0d0d0d;
+      border-bottom: 1px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-wrap a { display: flex; line-height: 0; }
+    .logo-wrap img { height: 67px; width: auto; object-fit: contain; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--red); }
+
+    .btn-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--red);
+      border-radius: 4px;
+      padding: 10px 20px;
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+
+    .btn-phone:hover { background: var(--red); }
+
+    .btn-phone svg { flex-shrink: 0; }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .header-address {
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-address svg { color: var(--red); flex-shrink: 0; }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 88px);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-bg video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Dark gradient overlay */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.45) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Red glow accent */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: radial-gradient(ellipse at 30% 100%, rgba(180,10,10,0.35) 0%, transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 48px;
+      max-width: 620px;
+      isolation: isolate;
+    }
+
+    .hero-content h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .hero-content h1 .accent {
+      color: var(--red);
+      font-style: italic;
+    }
+
+    .hero-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin: 18px 0 10px;
+    }
+
+    .hero-tagline span { color: var(--red); margin: 0 8px; }
+
+    .hero-sub {
+      font-size: 15px;
+      color: #cccccc;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      border: 2px solid var(--red);
+      padding: 14px 28px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--red-hover); border-color: var(--red-hover); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.6);
+      padding: 14px 28px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* ─── TRUST BAR ──────────────────────────────────── */
+    .trust-bar {
+      background: #161616;
+      border-top: 1px solid #2a2a2a;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    .trust-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(204,17,17,0.15);
+      border: 1px solid rgba(204,17,17,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .trust-icon svg { color: var(--red); }
+
+    /* ─── SERVICES SECTION ───────────────────────────── */
+    .services {
+      padding: 72px 48px;
+      background: var(--dark2);
+    }
+
+    .services-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .services-left {}
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .services-left h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .services-left p {
+      font-size: 15px;
+      color: #aaaaaa;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 420px;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 1px solid #2a2a2a;
+      padding-top: 28px;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #aaaaaa;
+    }
+
+    .badge-item svg { color: var(--red); flex-shrink: 0; }
+
+    .services-right {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .service-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .service-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px);
+    }
+
+    .card-video {
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+    }
+
+    .card-video video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--red);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .card-icon svg { color: var(--white); }
+
+    .card-body h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .card-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card-body ul li {
+      font-size: 12px;
+      color: #999999;
+      padding: 3px 0;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .card-body ul li::before {
+      content: '•';
+      color: var(--red);
+      position: absolute;
+      left: 0;
+    }
+
+    /* ─── FOOTER STRIP ───────────────────────────────── */
+        .footer-strip {
+      background: #0a0a0a;
+      border-top: 1px solid #222;
+      padding: 18px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    .footer-strip span { color: var(--red); margin: 0 10px; }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 14px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid #1e1e1e;
+      padding-top: 12px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #444444;
+      text-transform: none;
+    }
+
+    .footer-bottom a { color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: #aaaaaa; }
+
+    .footer-social { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+
+    .footer-social a {
+      color: #555555;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .footer-social a:hover { color: var(--white); transform: translateY(-2px); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .services-inner { grid-template-columns: 1fr; gap: 40px; }
+      .services-right { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
+      nav { gap: 16px; flex-wrap: wrap; }
+      .hero-content { padding: 60px 20px; }
+      .trust-bar { padding: 14px 20px; gap: 24px; }
+      .services { padding: 48px 20px; }
+      .services-right { grid-template-columns: 1fr; }
+      .footer-strip { padding: 16px 20px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header>
+  <div class="header-top">
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <a href="index.html">
+        <img src="Logo_2shady.png" alt="2ShadyTinting" />
+      </a>
+    </div>
+
+    <!-- Nav -->
+    <nav>
+      <a href="index.html" style="color: var(--red);">Home</a>
+      <a href="services.html">Services</a>
+      <a href="why-2shady.html">Why 2Shady</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+    </nav>
+
+    <!-- Phone + Address -->
+    <div class="header-right">
+      <a href="tel:6178280887" class="btn-phone">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+        </svg>
+        (617) 828-0887
+      </a>
+      <div class="header-address">
+        <svg width="12" height="12" fill="#cc1111" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        1181 Main St, Brockton, MA 02301
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline>
+      <source src="https://assets.mixkit.co/videos/47831/47831-720.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero-content">
+    <h1>
+      Premium Window Tinting<br />
+      <span class="accent">&amp; Auto Detailing</span>
+    </h1>
+
+    <p class="hero-tagline">
+      Precision <span>•</span> Protection <span>•</span> Performance
+    </p>
+
+    <p class="hero-sub">Enhance Style. Maximize Comfort. Protect What Matters.</p>
+
+    <div class="hero-btns">
+      <a href="appointment.html" class="btn-primary">
+        Book an Appointment
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+      <a href="appointment.html" class="btn-secondary">
+        Get a Free Quote
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-icon">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/>
+      </svg>
+    </div>
+    Licensed &amp; Insured
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/>
+      </svg>
+    </div>
+    High-Quality Materials
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+      </svg>
+    </div>
+    Satisfaction Guaranteed
+  </div>
+</div>
+
+<!-- ═══ SERVICES ══════════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="services-inner">
+
+    <!-- Left copy -->
+    <div class="services-left">
+      <p class="section-label">Our Services</p>
+      <h2>Protect &amp; Elevate</h2>
+      <p>Expert window tinting and detailing services designed for style, comfort, and long-lasting protection.</p>
+
+      <div class="trust-badges">
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          </svg>
+          Licensed &amp; Insured
+        </div>
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/>
+          </svg>
+          High-Quality Materials
+        </div>
+        <div class="badge-item">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+          </svg>
+          Satisfaction Guaranteed
+        </div>
+      </div>
+    </div>
+
+    <!-- Right cards -->
+    <div class="services-right">
+
+      <!-- Window Tinting -->
+      <a href="window-tinting.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47834/47834-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+            <h3>Window Tinting</h3>
+            <ul>
+              <li>Ceramic Window Tint</li>
+              <li>Dye &amp; Carbon Films</li>
+              <li>UV &amp; Heat Rejection</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+
+      <!-- Paint Protection -->
+      <a href="paint-protection.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47830/47830-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 2C6 2 4 7 4 12s2 10 8 10 8-5 8-10S18 2 12 2z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <h3>Paint Protection</h3>
+            <ul>
+              <li>Ceramic Coatings</li>
+              <li>Paint Correction</li>
+              <li>Gloss Enhancement</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+
+      <!-- Auto Detailing -->
+      <a href="auto-detailing.html" class="service-card-link">
+        <div class="service-card">
+          <div class="card-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://assets.mixkit.co/videos/47832/47832-720.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-body">
+            <div class="card-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+            </div>
+            <h3>Auto Detailing</h3>
+            <ul>
+              <li>Interior Deep Clean</li>
+              <li>Exterior Wash &amp; Wax</li>
+              <li>Full Vehicle Detailing</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER STRIP ══════════════════════════════════════ -->
+<div class="footer-strip">
+  <div class="footer-top">
+    <div>
+      Locally Owned &amp; Operated
+      <span>•</span>
+      Premium Quality Guaranteed
+      <span>•</span>
+      Serving Brockton &amp; Surrounding Cities
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/2shadytinting" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/2shadytinting/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 2Shady Tinting. All rights reserved.</span>
+    <span>Designed by <a href="#" rel="noopener noreferrer">DrewBreezy Media</a></span>
+  </div>
+</div>
+
+</body>
+</html>

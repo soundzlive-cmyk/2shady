@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2 Shady Tinting — Commercial Window Tint | Brockton + 25mi</title>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtmEvent(name, params) { window.dataLayer.push(Object.assign({event: name}, params||{})); }
+  </script>
+
+<style>
+  :root {
+    --bg: #0b0b0f; --panel: #121218; --accent: #39a0ff; --accent-2: #8bd3ff;
+    --text: #e7e9ee; --muted: #aab2c5; --success: #20d67b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    background: radial-gradient(1200px 800px at 70% -10%, #111522 0%, var(--bg) 50%),
+                radial-gradient(1000px 600px at -10% 10%, #0f1422 0%, var(--bg) 60%), var(--bg);
+    color: var(--text); line-height: 1.5;
+  }
+  a { color: var(--accent-2); text-decoration: none; }
+  header { position: sticky; top: 0; z-index: 30; background: rgba(10,10,16,0.7);
+           backdrop-filter: blur(8px); border-bottom: 1px solid #1e2233; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 14px 18px; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo { width: 40px; height: 40px; background: linear-gradient(145deg,#0d0f18,#1f2333);
+          border:1px solid #2a2f45; border-radius: 10px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 24px rgba(57,160,255,0.15); }
+  .brand h1 { font-size: 18px; margin: 0; letter-spacing: .4px; color: #dfe6f5; }
+  .hero { padding: 52px 18px 28px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 26px; }
+  .hero-card { background: linear-gradient(180deg, rgba(24,28,44,.6) 0%, rgba(14,16,24,.8) 100%);
+               border:1px solid #1d2235; border-radius: 18px; padding: 28px; box-shadow: 0 20px 80px rgba(0,0,0,.45); }
+  .badge { display:inline-block; padding:6px 10px; border:1px solid #24304a; border-radius:999px; color:#cde6ff; background:rgba(35,60,110,.25); font-size: 12px; }
+  h2.hero-title { font-size: clamp(26px,4vw,40px); margin: 14px 0 12px; letter-spacing: .3px;
+    background: linear-gradient(90deg,#fff,#a6cfff); -webkit-background-clip:text; background-clip:text; color: transparent; }
+  .hero-sub { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
+  .cta-row { display:flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .btn { padding: 12px 16px; border-radius: 12px; border: 1px solid #1e2740;
+         background: linear-gradient(180deg,#111829,#0e1422); color:#e9f2ff; font-weight: 600; cursor: pointer;
+         box-shadow: 0 6px 20px rgba(0,0,0,.45), inset 0 0 18px rgba(57,160,255,.12);
+         transition: transform .08s, box-shadow .2s, border-color .2s; }
+  .btn:hover { transform: translateY(-1px); border-color:#2a73ff; box-shadow: 0 10px 28px rgba(0,0,0,.55), inset 0 0 24px rgba(57,160,255,.2); }
+  .btn.primary { background: linear-gradient(180deg,#2a73ff,#1a49d6); border-color:#2a6aff; box-shadow: 0 10px 38px rgba(42,115,255,.4); color: #fff; }
+  .trust { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top: 18px; }
+  .trust .chip { background:#0f1424; border:1px solid #202a40; padding:10px 12px; border-radius:12px; font-size: 13px; color:#d4def2; }
+  .side { display:flex; flex-direction:column; gap:16px; }
+  .offer, .contact-card { background: linear-gradient(180deg, rgba(24,28,44,.5) 0%, rgba(14,16,24,.8) 100%);
+                          border:1px solid #1e2235; border-radius:18px; padding:18px; }
+  .offer h3, .contact-card h3 { margin: 0 0 8px; color:#eaf2ff; }
+  .offer p { margin:0; color:#bcd0ef; }
+  .form-wrap { max-width: 860px; margin: 14px auto 60px; padding: 18px;
+               background: linear-gradient(180deg, rgba(18,20,32,.8) 0%, rgba(10,12,20,.9) 100%);
+               border:1px solid #1a2033; border-radius: 18px; }
+  form { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }
+  label { font-size: 13px; color:#c4d2ee; }
+  input, select, textarea { width:100%; background:#0d1220; border:1px solid #222a42; color:#e8f0ff;
+                            border-radius:12px; padding:12px; font-size:15px; outline:none;
+                            transition: border-color .2s, box-shadow .2s; }
+  input:focus, select:focus, textarea:focus { border-color:#2a73ff; box-shadow: 0 0 0 4px rgba(42,115,255,.12); }
+  .full { grid-column: 1 / -1; }
+  .submit-row { display:flex; gap:12px; align-items:center; }
+  .notice { color:#9db6e5; font-size:12px; }
+  footer { border-top:1px solid #1e2235; color:#9fb2d6; padding:24px 18px; text-align:center; }
+  .map { height:240px; border:1px solid #1e2235; border-radius:14px; overflow:hidden; }
+  @media (max-width: 900px) { .hero { grid-template-columns:1fr; } .grid { grid-template-columns:1fr; } form { grid-template-columns:1fr; } }
+</style>
+
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <header>
+    <div class="wrap brand">
+      <div class="logo"></div>
+      <h1>2 Shady Tinting</h1>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <span class="badge">Brockton + 25 miles • Mobile & In‑Shop</span>
+        <h2 class="hero-title">Commercial Window Tint</h2>
+        <p class="hero-sub">Premium films • Lifetime warranty • Expert installation • Same‑day appointments</p>
+        <div class="cta-row">
+          <a class="btn primary" href="tel:+1-617-828-0887">📞 Call 617-828-0887</a>
+          <a class="btn" href="#quote">Get My Free Quote</a>
+        </div>
+        <div class="trust">
+          <div class="chip">★ 5‑Star Local Reviews</div>
+          <div class="chip">✅ Lifetime Warranty</div>
+          <div class="chip">🛠️ Certified Installers</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="offer">
+          <h3>Limited Offer – 10% Off</h3>
+          <p>Book this week and lock in savings on premium commercial window tint.</p>
+        </div>
+        <div class="contact-card">
+          <h3>Fast Contact</h3>
+          <p>Email: <a href="mailto:sales@2shadytinting.com">sales@2shadytinting.com</a><br/>Phone: <a href="tel:+1-617-828-0887">617-828-0887</a><br/>Hours:<br/>Tues – Fri: 9:00 AM – 6:00 PM<br/>Sat: 10:00 AM – 4:00 PM<br/>Sun/Mon: Closed<br/>Thanksgiving: Closed<br/>Christmas: Closed<br/>New Year’s Day: Closed</p>
+        </div>
+      </div>
+    </section>
+    <section class="form-wrap" id="quote">
+      <h3>Get a Free Quote</h3>
+      <form action="form_handler.php" method="post">
+        <input type="hidden" name="page" value="commercial" />
+        <div><label for="name">Name</label><input id="name" name="name" placeholder="Your full name" required /></div>
+        <div><label for="phone">Phone</label><input id="phone" name="phone" placeholder="(###) ###‑####" required /></div>
+        <div><label for="service">Service</label>
+          <select id="service" name="service">
+            <option>Auto Window Tint</option>
+            <option>Ceramic Tint</option>
+            <option>Paint Protection Film (PPF)</option>
+            <option>Headlight / Taillight Tint</option>
+            <option>Residential Window Tint</option>
+            <option selected>Commercial Window Tint</option>
+            <option>Mobile Tint Service</option>
+          </select>
+        </div>
+        <div><label for="date">Preferred Date</label><input id="date" type="date" name="date" /></div>
+        <div class="full"><label for="details">Details</label><textarea id="details" name="details" rows="4" placeholder="Vehicle/home details, tint shade, questions..."></textarea></div>
+        <div class="full submit-row"><button class="btn primary" type="submit">Request My Quote</button><span class="notice">We respect your time. No spam—ever.</span></div>
+      </form>
+    </section>
+    <section class="wrap" style="padding:0 0 40px;">
+      <div class="map"><iframe width="100%" height="100%" frameborder="0" style="border:0"
+          src="https://www.google.com/maps?q=Brockton,+MA&output=embed" allowfullscreen></iframe></div>
+    </section>
+  </main>
+  <footer>© <span id="year"></span> 2 Shady Tinting — Brockton, MA • <a href="https://www.2shadytinting.com">2ShadyTinting.com</a></footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
