@@ -331,6 +331,20 @@
       gap: 28px;
     }
 
+    .packages-addon {
+      margin-top: 40px;
+      text-align: center;
+      padding: 20px 24px;
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .packages-addon strong { color: var(--white); }
+    .packages-addon .addon-price { color: var(--red); font-weight: 700; }
+
     .package-card {
       background: var(--dark3);
       border: 1px solid #2e2e2e;
@@ -673,7 +687,7 @@
             <span class="package-tier">Basic</span>
           </div>
           <h3>Basic Detail</h3>
-          <div class="package-price">Starting at $250</div>
+          <div class="package-price">Starting at $250 <span style="font-size: 15px; color: var(--gray); font-family: 'Open Sans', sans-serif; letter-spacing: 0;">(Cars) · $299 (Trucks)</span></div>
           <p>A thorough wash-and-go service to get your vehicle clean and presentable fast.</p>
 
           <p class="pkg-list-label">Interior Includes</p>
@@ -765,6 +779,11 @@
       </div>
 
     </div>
+
+    <div class="packages-addon">
+      <strong>Add-On — Complete Clay Bar Buff &amp; Wax:</strong> <span class="addon-price">+$125</span> added to any package
+    </div>
+
   </div>
 </section>
 
