@@ -17,11 +17,11 @@
   <meta property="og:title" content="Book Window Tinting or Detailing | 2Shady Tinting Brockton" />
   <meta property="og:description" content="Book window tinting, ceramic coating or auto detailing at 2Shady Tinting in Brockton, MA. Same/next-day availability, Mon–Sat 9–6. Call (617) 828-0887." />
   <meta property="og:url" content="https://www.2shadytinting.com/appointment.html" />
-  <meta property="og:image" content="https://www.2shadytinting.com/Logo_2shady.png" />
+  <meta property="og:image" content="https://www.2shadytinting.com/img/2shady_logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Book Window Tinting or Detailing | 2Shady Tinting Brockton" />
   <meta name="twitter:description" content="Book window tinting, ceramic coating or auto detailing at 2Shady Tinting in Brockton, MA. Same/next-day availability, Mon–Sat 9–6. Call (617) 828-0887." />
-  <meta name="twitter:image" content="https://www.2shadytinting.com/Logo_2shady.png" />
+  <meta name="twitter:image" content="https://www.2shadytinting.com/img/2shady_logo.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,7 +87,8 @@
 
     .logo-wrap { display: flex; flex-direction: column; line-height: 1; }
     .logo-wrap a { display: flex; line-height: 0; }
-    .logo-wrap img { height: 67px; width: auto; object-fit: contain; }
+    .logo-wrap img { height: 84px; width: auto; object-fit: contain; }
+    img[src$="2shady_logo.png"] { -webkit-mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); }
 
     nav { display: flex; align-items: center; gap: 36px; }
 
@@ -610,6 +611,31 @@
       .footer-strip { padding: 16px 20px; font-size: 11px; }
     }
   </style>
+  <style>
+    .map-section { background: #0d0d0d; border-top: 1px solid #222; padding: 72px 48px; }
+    .map-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: stretch; }
+    .map-info .map-label { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .map-info h2 { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; text-transform: uppercase; line-height: 1.05; color: #fff; margin-bottom: 24px; }
+    .map-info h2 em { color: var(--red); font-style: normal; }
+    .map-detail { display: flex; gap: 12px; margin-bottom: 18px; color: #bbb; font-size: 15px; line-height: 1.6; }
+    .map-detail strong { display: block; color: #fff; font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 13px; }
+    .map-detail a { color: #bbb; text-decoration: none; }
+    .map-detail a:hover { color: var(--red); }
+    .map-icon { flex: 0 0 auto; width: 20px; color: var(--red); }
+    .map-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .map-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 4px; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .map-btn-primary { background: var(--red); color: #fff; border: 2px solid var(--red); }
+    .map-btn-primary:hover { background: #e01515; border-color: #e01515; }
+    .map-btn-outline { color: #fff; border: 2px solid #444; }
+    .map-btn-outline:hover { border-color: var(--red); color: var(--red); }
+    .map-frame { position: relative; min-height: 380px; border-radius: 8px; overflow: hidden; border: 1px solid #2e2e2e; border-bottom: 3px solid var(--red); box-shadow: 0 16px 40px rgba(0,0,0,0.5); background: #1a1a1a; }
+    .map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    @media (max-width: 900px) {
+      .map-section { padding: 56px 20px; }
+      .map-inner { grid-template-columns: 1fr; gap: 28px; }
+      .map-frame { min-height: 300px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -618,7 +644,7 @@
   <div class="header-top">
     <div class="logo-wrap">
       <a href="index.html">
-        <img src="Logo_2shady.png" alt="2ShadyTinting" />
+        <img src="img/2shady_logo.png" alt="2ShadyTinting" />
       </a>
     </div>
     <nav>
@@ -639,7 +665,7 @@
         <svg width="12" height="12" fill="#cc1111" viewBox="0 0 24 24">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
         </svg>
-        516 Montello St Unit 1, Brockton, MA 02301
+        516 Montello St Unit 1, Brockton, MA 02302
       </div>
     </div>
   </div>
@@ -813,7 +839,7 @@
           </div>
           <div class="info-text">
             <div class="label">Address</div>
-            <div class="value">516 Montello St Unit 1<br />Brockton, MA 02301</div>
+            <div class="value">516 Montello St Unit 1<br />Brockton, MA 02302</div>
           </div>
         </div>
 
@@ -875,6 +901,26 @@
 </section>
 
 <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <!-- MAP / DIRECTIONS -->
+  <section class="map-section" id="location" aria-label="Location and directions">
+    <div class="map-inner">
+      <div class="map-info">
+        <p class="map-label">Find Us</p>
+        <h2>Visit <em>Our Shop</em></h2>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/></svg><div><strong>Address</strong>516 Montello St Unit 1, Brockton, MA 02302</div></div>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.4l3.5 2.1-.8 1.3L11 13V7h2v5.4z"/></svg><div><strong>Hours</strong>Mon–Sat: 9am – 6pm<br>Sun: Closed</div></div>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg><div><strong>Phone</strong><a href="tel:+16178280887">(617) 828-0887</a></div></div>
+        <div class="map-actions">
+          <a class="map-btn map-btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=2+Shady+Tinting+%26+Detailing,+516+Montello+St+Unit+1,+Brockton,+MA+02302" target="_blank" rel="noopener noreferrer">Get Directions</a>
+          <a class="map-btn map-btn-outline" href="https://maps.google.com/?cid=7861454423960029510" target="_blank" rel="noopener noreferrer">View on Google</a>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps?q=2+Shady+Tinting+%26+Detailing,+516+Montello+St+Unit+1,+Brockton,+MA+02302&output=embed" title="Map to 2Shady Tinting, 516 Montello St Unit 1, Brockton, MA 02302" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
 <div class="footer-strip">
   <div class="footer-top">
     <div>
