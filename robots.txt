@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /form_handler.php
+Disallow: /2Shady_Google_Marketing_Package_v3/
+
+Sitemap: https://www.2shadytinting.com/sitemap.xml
