@@ -930,6 +930,30 @@
 
     .footer-social a:hover { color: var(--white); transform: translateY(-2px); }
 
+    /* ─── HAMBURGER ──────────────────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      order: 2;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ─── RESPONSIVE ─────────────────────────────────── */
     @media (max-width: 1024px) {
       .services-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -937,8 +961,26 @@
     }
 
     @media (max-width: 768px) {
-      .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
-      nav { gap: 16px; flex-wrap: wrap; }
+      .header-top { padding: 12px 20px; flex-wrap: nowrap; gap: 12px; position: relative; }
+      .logo-wrap { order: 1; }
+      .hamburger { display: flex; }
+      .header-right { order: 3; }
+      nav {
+        display: none;
+        order: 4;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        background: #0d0d0d;
+        border-top: 1px solid #222;
+        padding: 8px 0;
+      }
+      nav.open { display: flex; }
+      nav a {
+        padding: 12px 20px;
+        font-size: 15px;
+        border-bottom: 1px solid #1a1a1a;
+      }
       .hero-content { padding: 60px 20px; }
       .trust-bar { padding: 14px 20px; gap: 24px; }
       .services { padding: 48px 20px; }
@@ -1000,8 +1042,13 @@
       </a>
     </div>
 
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
+
     <!-- Nav -->
-    <nav>
+    <nav id="main-nav">
       <a href="index.html" style="color: var(--red);">Home</a>
       <a href="services.html">Services</a>
       <a href="why-2shady.html">Why 2Shady</a>
@@ -1321,5 +1368,23 @@
   </div>
 </div>
 
+<script>
+  (function(){
+    var btn = document.querySelector('.hamburger');
+    var nav = document.getElementById('main-nav');
+    if (!btn || !nav) return;
+    btn.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+    // Close nav when a link is tapped
+    nav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 </body>
 </html>
