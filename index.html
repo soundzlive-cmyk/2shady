@@ -740,6 +740,137 @@
       left: 0;
     }
 
+    /* ─── PPF & DETAILING HIGHLIGHT ─────────────────── */
+    .highlight-section {
+      background: var(--dark2);
+      padding: 80px 48px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .highlight-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .highlight-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .highlight-header .section-label { margin-bottom: 10px; }
+    .highlight-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+    .highlight-header p {
+      color: #aaa;
+      font-size: 15px;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .highlight-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .highlight-card:hover { border-color: var(--red); transform: translateY(-4px); }
+    .highlight-card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .highlight-card-body { padding: 28px 28px 32px; }
+    .highlight-tag {
+      display: inline-block;
+      background: rgba(204,17,17,0.15);
+      border: 1px solid rgba(204,17,17,0.4);
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .highlight-card-body h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .highlight-card-body p {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .highlight-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+      margin-bottom: 24px;
+    }
+    .highlight-feature {
+      font-size: 13px;
+      color: #bbb;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .highlight-feature::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; }
+    .highlight-price {
+      background: var(--dark);
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .highlight-price-label { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px; }
+    .highlight-price-amount {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .highlight-price-amount span { color: var(--red); }
+    .highlight-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      padding: 12px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .highlight-btn:hover { background: var(--red-hover); }
+    @media (max-width: 768px) {
+      .highlight-section { padding: 56px 20px; }
+      .highlight-grid { grid-template-columns: 1fr; }
+      .highlight-features { grid-template-columns: 1fr; }
+    }
+
     /* ─── FOOTER STRIP ───────────────────────────────── */
         .footer-strip {
       background: #0a0a0a;
@@ -1063,6 +1194,68 @@
           </div>
         </div>
       </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- PPF, WRAPS & DETAILING HIGHLIGHT -->
+<section class="highlight-section">
+  <div class="highlight-inner">
+    <div class="highlight-header">
+      <p class="section-label">Protection &amp; Care</p>
+      <h2>PPF, Wraps &amp; Detailing</h2>
+      <p>From military-grade paint protection film to full color-change wraps and professional detailing — we keep your vehicle looking factory-fresh.</p>
+    </div>
+    <div class="highlight-grid">
+
+      <!-- PPF & Wraps Card -->
+      <div class="highlight-card">
+        <img class="highlight-card-img"
+          src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80"
+          alt="Paint Protection Film on vehicle hood" loading="lazy">
+        <div class="highlight-card-body">
+          <span class="highlight-tag">Paint Protection &amp; Wraps</span>
+          <h3>PPF &amp; Vinyl Wraps</h3>
+          <p>Shield your paint from rock chips, road debris, and UV damage with self-healing PPF — or completely transform your vehicle's look with a premium vinyl wrap.</p>
+          <div class="highlight-features">
+            <div class="highlight-feature">Full Car PPF</div>
+            <div class="highlight-feature">Full Front PPF</div>
+            <div class="highlight-feature">Front Bumper PPF</div>
+            <div class="highlight-feature">Color Change Wraps</div>
+            <div class="highlight-feature">Matte &amp; Satin Finishes</div>
+            <div class="highlight-feature">Chrome &amp; Gloss Wraps</div>
+          </div>
+          <a href="paint-protection.html" class="highlight-btn">Explore PPF &amp; Wraps &rsaquo;</a>
+        </div>
+      </div>
+
+      <!-- Detailing Card -->
+      <div class="highlight-card">
+        <img class="highlight-card-img"
+          src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&q=80"
+          alt="Professional auto detailing interior" loading="lazy">
+        <div class="highlight-card-body">
+          <span class="highlight-tag">Auto Detailing</span>
+          <h3>Professional Detailing</h3>
+          <p>From a thorough single-panel clean to a full concours-level detail, our packages are priced for every vehicle size and every budget.</p>
+          <div class="highlight-features">
+            <div class="highlight-feature">Exterior Hand Wash</div>
+            <div class="highlight-feature">Interior Deep Clean</div>
+            <div class="highlight-feature">Clay Bar Treatment</div>
+            <div class="highlight-feature">Leather Conditioning</div>
+            <div class="highlight-feature">Paint Correction</div>
+            <div class="highlight-feature">Ceramic Spray Sealant</div>
+          </div>
+          <div class="highlight-price">
+            <div>
+              <div class="highlight-price-label">Starting at</div>
+              <div class="highlight-price-amount"><span>$199</span> — Small 2-Door</div>
+            </div>
+          </div>
+          <a href="auto-detailing.html" class="highlight-btn">View Detailing Packages &rsaquo;</a>
+        </div>
+      </div>
 
     </div>
   </div>
