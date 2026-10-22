@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
-  <meta name="theme-color" content="#0d0d0d" />
+  <meta name="theme-color" content="#000000" />
   <meta name="geo.region" content="US-MA" />
   <meta name="geo.placename" content="Brockton" />
   <meta property="og:site_name" content="2Shady Tinting" />
@@ -50,6 +50,7 @@
   }
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --red: #e8001c; --dark: #0a0a0a; --gray-dark: #111; --gray-mid: #1a1a1a; --white: #ffffff; }
@@ -139,25 +140,59 @@
     .areas-served h3 em { color: var(--red); font-style: normal; }
     .areas-served p { color: #999; font-size: 14px; line-height: 1.6; margin: 0; }
   </style>
+  <style id="site-header-styles">
+    header.site-header { background: #000000; border-bottom: 1px solid #2a2a2a; position: sticky; top: 0; z-index: 1000; }
+    header.site-header .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 0; padding: 14px 48px; position: static; }
+    header.site-header .logo-wrap { display: flex; flex-direction: column; line-height: 1; order: 0; }
+    header.site-header .logo-wrap a { display: flex; line-height: 0; }
+    header.site-header .logo-wrap img { height: 84px; width: auto; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); }
+    header.site-header nav { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: flex-start; gap: 36px; order: 0; width: auto; height: auto; padding: 0; margin: 0; background: none; border: 0; position: static; }
+    header.site-header nav a { color: var(--white, #fff); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; padding: 0; border: 0; transition: color 0.2s; }
+    header.site-header nav a:hover { color: var(--red); }
+    header.site-header .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; order: 0; }
+    header.site-header .btn-phone { display: flex; align-items: center; gap: 8px; border: 2px solid var(--red); border-radius: 4px; padding: 10px 20px; background: none; color: var(--white, #fff); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1px; transition: background 0.2s; }
+    header.site-header .btn-phone:hover { background: var(--red); }
+    header.site-header .btn-phone svg { flex-shrink: 0; }
+    header.site-header .header-address { display: flex; align-items: center; justify-content: flex-start; gap: 5px; padding: 0; background: none; border: 0; text-align: left; font-family: 'Open Sans', sans-serif; font-size: 12px; color: var(--gray, #aaaaaa); }
+    header.site-header .header-address svg { color: var(--red); flex-shrink: 0; }
+    @media (max-width: 768px) {
+      header.site-header .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
+      header.site-header nav { gap: 16px; flex-wrap: wrap; }
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">
-    <a href="index.html"><img src="img/2shady_logo.png" alt="2ShadyTinting" /></a>
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo-wrap">
+      <a href="index.html">
+        <img src="img/2shady_logo.png" alt="2ShadyTinting" />
+      </a>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="why-2shady.html">Why 2Shady</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="reviews.html">Reviews</a>
+    </nav>
+    <div class="header-right">
+      <a href="tel:6178280887" class="btn-phone">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+        </svg>
+        (617) 828-0887
+      </a>
+      <div class="header-address">
+        <svg width="12" height="12" fill="#cc1111" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        516 Montello St Unit 1, Brockton, MA 02302
+      </div>
+    </div>
   </div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="why-2shady.html">Why 2Shady</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="reviews.html">Reviews</a>
-  </div>
-  <div class="nav-right">
-    <a href="tel:6178280887" class="nav-phone">📞 (617) 828-0887</a>
-    <div class="nav-address">📍 516 Montello St Unit 1, Brockton, MA 02302</div>
-  </div>
-</nav>
+</header>
 
 <div class="page-header">
   <div class="label">Legal</div>
@@ -236,6 +271,33 @@
   </section>
 
 </div>
+
+  <!-- GOOGLE REVIEWS -->
+  <style>
+    .greviews-section { background: #0a0a0a; border-top: 1px solid #222; padding: 72px 48px; }
+    .greviews-inner { max-width: 1280px; margin: 0 auto; }
+    .greviews-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+    .greviews-label { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red, #cc1111); margin-bottom: 12px; }
+    .greviews-head h2 { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; text-transform: uppercase; line-height: 1.05; color: #fff; margin: 0; }
+    .greviews-head h2 em { font-style: normal; color: var(--red, #cc1111); }
+    .greviews-link { color: #fff; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; border-bottom: 2px solid var(--red, #cc1111); padding-bottom: 4px; white-space: nowrap; }
+    .greviews-link:hover { color: var(--red, #cc1111); }
+    @media (max-width: 768px) { .greviews-section { padding: 56px 16px; } }
+  </style>
+  <section class="greviews-section" id="google-reviews" aria-label="Google reviews">
+    <div class="greviews-inner">
+      <div class="greviews-head">
+        <div>
+          <p class="greviews-label">Google Reviews</p>
+          <h2>What Our <em>Customers</em> Say</h2>
+        </div>
+        <a class="greviews-link" href="reviews.html">See All Reviews &rarr;</a>
+      </div>
+      <!-- Elfsight Google Reviews | 2 Shady Tinting -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-c694fa84-f4b5-4073-a4ac-ffb69b8660a9" data-elfsight-app-lazy></div>
+    </div>
+  </section>
 
   <!-- MAP / DIRECTIONS -->
   <section class="map-section" id="location" aria-label="Location and directions">
