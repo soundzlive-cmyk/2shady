@@ -1,0 +1,1191 @@
+<?php
+/**
+ * 2Shady Tinting — Appointment page with built-in form handler.
+ * Hosted on thesoe2.net. Links and images point back to www.2shadytinting.com.
+ *
+ * The page's script posts to itself and gets JSON back. Without JavaScript,
+ * the form posts normally and the page re-renders with a success/error message.
+ * Email is sent with PHP's built-in mail().
+ */
+
+// ── Settings ─────────────────────────────────────────────
+$TO_EMAIL = 'sales@2shadytinting.com, soundzlive@yahoo.com';  // comma-separated; each gets a copy
+$PHONE    = '(617) 828-0887';
+
+function h($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+function cut($s, $max) { return function_exists('mb_substr') ? mb_substr($s, 0, $max) : substr($s, 0, $max); }
+function clean($key, $max = 500) {
+    $v = trim(strip_tags($_POST[$key] ?? ''));
+    $v = str_replace(["\r", "\n"], ' ', $v);
+    return cut($v, $max);
+}
+
+$result = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $wantsJson = stripos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
+
+    $name    = clean('name', 100);
+    $phone   = clean('phone', 40);
+    $email   = clean('email', 150);
+    $service = clean('service', 100);
+    $vehicle = clean('vehicle', 150);
+    $date    = clean('date', 20);
+    $time    = clean('time', 60);
+    $notes   = cut(trim(strip_tags($_POST['notes'] ?? '')), 3000);
+
+    if (!empty($_POST['website'])) {
+        // Spam trap filled in: pretend it worked, send nothing.
+        $result = ['success' => true, 'message' => "Thanks! We'll be in touch shortly to confirm your appointment."];
+    } elseif (!$name || !$phone || !$service) {
+        http_response_code(400);
+        $result = ['success' => false, 'message' => 'Please fill in your name, phone number, and select a service.'];
+    } elseif ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        $result = ['success' => false, 'message' => 'Please enter a valid email address, or leave it blank.'];
+    } else {
+        $subject = "New Appointment Request — $service | 2 Shady Tinting";
+
+        $body  = "NEW APPOINTMENT REQUEST — 2 Shady Tinting\n";
+        $body .= str_repeat('=', 45) . "\n\n";
+        $body .= "Name:             $name\n";
+        $body .= "Phone:            $phone\n";
+        $body .= "Email:            $email\n";
+        $body .= "Service:          $service\n";
+        $body .= "Vehicle:          $vehicle\n";
+        $body .= "Preferred Date:   $date\n";
+        $body .= "Preferred Time:   $time\n";
+        $body .= "Notes:            $notes\n\n";
+        $body .= str_repeat('=', 45) . "\n";
+        $body .= "Sent from the 2shadytinting.com appointment form\n";
+
+        $host    = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST'] ?? 'thesoe2.net');
+        $headers = [
+            'MIME-Version: 1.0',
+            'Content-Type: text/plain; charset=UTF-8',
+            'From: 2Shady Appointments <noreply@' . $host . '>',
+            'X-Mailer: PHP/' . phpversion(),
+        ];
+        if ($email) $headers[] = 'Reply-To: ' . $email;
+
+        $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+        if (@mail($TO_EMAIL, $encodedSubject, $body, implode("\r\n", $headers))) {
+            $result = ['success' => true, 'message' => "Thanks, $name! We'll be in touch shortly to confirm your appointment."];
+        } else {
+            http_response_code(500);
+            $result = ['success' => false, 'message' => "There was a problem sending your request. Please call us directly at $PHONE."];
+        }
+    }
+
+    if ($wantsJson) {
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
+}
+
+// Re-fill fields after a failed no-JS submit
+function old($key) {
+    global $result;
+    return ($result && !$result['success']) ? h($_POST[$key] ?? '') : '';
+}
+function sel($key, $value) {
+    global $result;
+    return ($result && !$result['success'] && ($_POST[$key] ?? null) === $value) ? ' selected' : '';
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Window Tinting or Detailing | 2Shady Tinting Brockton</title>
+  <meta name="description" content="Book window tinting, ceramic coating or detailing at 2Shady Tinting, Brockton, MA. Same/next-day slots, Mon–Fri 9–6, Sat 10–4. Call (617) 828-0887." />
+  <meta name="keywords" content="book window tint appointment, window tint quote Brockton, detailing appointment near me, schedule ceramic coating, 2Shady Tinting appointment" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://www.2shadytinting.com/appointment.html" />
+  <link rel="icon" href="https://www.2shadytinting.com/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://www.2shadytinting.com/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://www.2shadytinting.com/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://www.2shadytinting.com/apple-touch-icon.png" />
+  <link rel="manifest" href="https://www.2shadytinting.com/site.webmanifest" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="geo.region" content="US-MA" />
+  <meta name="geo.placename" content="Brockton" />
+  <meta property="og:site_name" content="2Shady Tinting" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Book Window Tinting or Detailing | 2Shady Tinting Brockton" />
+  <meta property="og:description" content="Book window tinting, ceramic coating or detailing at 2Shady Tinting, Brockton, MA. Same/next-day slots, Mon–Fri 9–6, Sat 10–4. Call (617) 828-0887." />
+  <meta property="og:url" content="https://www.2shadytinting.com/appointment.html" />
+  <meta property="og:image" content="https://www.2shadytinting.com/img/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Black sedan with tinted windows by 2Shady Tinting in Brockton, MA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Book Window Tinting or Detailing | 2Shady Tinting Brockton" />
+  <meta name="twitter:description" content="Book window tinting, ceramic coating or detailing at 2Shady Tinting, Brockton, MA. Same/next-day slots, Mon–Fri 9–6, Sat 10–4. Call (617) 828-0887." />
+  <meta name="twitter:image" content="https://www.2shadytinting.com/img/og-image.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.2shadytinting.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Book an Appointment",
+        "item": "https://www.2shadytinting.com/appointment.html"
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #cc1111;
+      --red-hover: #e01515;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --dark4: #2a2a2a;
+      --white: #ffffff;
+      --gray: #aaaaaa;
+      --green: #1fcc6a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: #0d0d0d;
+      border-bottom: 1px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px;
+    }
+
+    .logo-wrap { display: flex; flex-direction: column; line-height: 1; }
+    .logo-wrap a { display: flex; line-height: 0; }
+    .logo-wrap img { height: 84px; width: auto; object-fit: contain; }
+    img[src$="2shady_logo.png"] { -webkit-mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--red); }
+
+    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+    .btn-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--red);
+      border-radius: 4px;
+      padding: 10px 20px;
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+
+    .btn-phone:hover { background: var(--red); }
+    .btn-phone svg { flex-shrink: 0; }
+
+    .header-address {
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-address svg { color: var(--red); flex-shrink: 0; }
+
+    /* ─── PAGE HERO ──────────────────────────────────── */
+    .page-hero {
+      position: relative;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .page-hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+    }
+
+    .page-hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(transparent, var(--dark));
+      pointer-events: none;
+    }
+
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .page-hero-content h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+    }
+
+    .page-hero-content h1 em { color: var(--red); font-style: normal; }
+
+    .page-hero-content p {
+      font-size: 15px;
+      color: #cccccc;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--red);
+      margin: 16px auto 0;
+    }
+
+    /* ─── BOOKING LAYOUT ─────────────────────────────── */
+    .booking-section {
+      padding: 72px 48px;
+      background: var(--dark2);
+    }
+
+    .booking-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ─── FORM ───────────────────────────────────────── */
+    .form-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 40px;
+    }
+
+    .form-card h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .form-card h2 em { color: var(--red); font-style: normal; }
+
+    .form-card > p {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-row .form-group { margin-bottom: 0; }
+
+    label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    label .req { color: var(--red); margin-left: 2px; }
+
+    input, select, textarea {
+      background: var(--dark4);
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      color: var(--white);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 14px;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: #555; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(204,17,17,0.12);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23aaa' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    select option { background: var(--dark3); }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid #2a2a2a;
+      margin: 24px 0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: 2px solid var(--red);
+      border-radius: 6px;
+      padding: 16px 28px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+    }
+
+    .submit-btn:hover { background: var(--red-hover); border-color: var(--red-hover); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Spinner */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── FORM SUCCESS / ERROR STATES ────────────────── */
+    .form-feedback {
+      display: none;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 16px;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .form-feedback.success {
+      background: rgba(31,204,106,0.1);
+      border: 1px solid rgba(31,204,106,0.3);
+      color: #1fcc6a;
+    }
+
+    .form-feedback.error {
+      background: rgba(204,17,17,0.1);
+      border: 1px solid rgba(204,17,17,0.35);
+      color: #ff6060;
+    }
+
+    .form-feedback svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* Success overlay (replaces form on success) */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(31,204,106,0.12);
+      border: 2px solid rgba(31,204,106,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .success-icon svg { color: #1fcc6a; }
+
+    .success-overlay h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .success-overlay p {
+      font-size: 14px;
+      color: var(--gray);
+      max-width: 340px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover { color: var(--white); }
+
+    /* ─── SIDEBAR ─────────────────────────────────────── */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+    .info-card {
+      background: var(--dark3);
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    .info-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .info-card h3 em { color: var(--red); font-style: normal; }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .info-row:last-child { margin-bottom: 0; }
+
+    .info-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(204,17,17,0.12);
+      border: 1px solid rgba(204,17,17,0.3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-icon svg { color: var(--red); }
+
+    .info-text .label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .info-text .value {
+      font-size: 14px;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .info-text a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .info-text a:hover { color: var(--red); }
+
+    /* Hours table */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid #2a2a2a;
+      color: var(--gray);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: #cccccc; }
+    .hours-row .open { color: var(--green); }
+    .hours-row .closed { color: #555; }
+
+    /* Trust list */
+    .trust-list { list-style: none; padding: 0; }
+
+    .trust-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #aaaaaa;
+      padding: 6px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .trust-list li:last-child { border-bottom: none; }
+    .trust-list li svg { color: var(--red); flex-shrink: 0; }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+        .footer-strip {
+      background: #0a0a0a;
+      border-top: 1px solid #222;
+      padding: 18px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #cccccc;
+    }
+
+    .footer-strip span { color: var(--red); margin: 0 10px; }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 14px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid #1e1e1e;
+      padding-top: 12px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #444444;
+      text-transform: none;
+    }
+
+    .footer-bottom a { color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: #aaaaaa; }
+
+    .footer-social { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+
+    .footer-social a {
+      color: #555555;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .footer-social a:hover { color: var(--white); transform: translateY(-2px); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+      .sidebar { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
+      nav { gap: 16px; flex-wrap: wrap; }
+      .booking-section { padding: 48px 20px; }
+      .form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+      .footer-strip { padding: 16px 20px; font-size: 11px; }
+    }
+  </style>
+  <style>
+    .map-section { background: #0d0d0d; border-top: 1px solid #222; padding: 72px 48px; }
+    .map-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: stretch; }
+    .map-info .map-label { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .map-info h2 { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; text-transform: uppercase; line-height: 1.05; color: #fff; margin-bottom: 24px; }
+    .map-info h2 em { color: var(--red); font-style: normal; }
+    .map-detail { display: flex; gap: 12px; margin-bottom: 18px; color: #bbb; font-size: 15px; line-height: 1.6; }
+    .map-detail strong { display: block; color: #fff; font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 13px; }
+    .map-detail a { color: #bbb; text-decoration: none; }
+    .map-detail a:hover { color: var(--red); }
+    .map-icon { flex: 0 0 auto; width: 20px; color: var(--red); }
+    .map-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .map-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 4px; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .map-btn-primary { background: var(--red); color: #fff; border: 2px solid var(--red); }
+    .map-btn-primary:hover { background: #e01515; border-color: #e01515; }
+    .map-btn-outline { color: #fff; border: 2px solid #444; }
+    .map-btn-outline:hover { border-color: var(--red); color: var(--red); }
+    .map-frame { position: relative; min-height: 380px; border-radius: 8px; overflow: hidden; border: 1px solid #2e2e2e; border-bottom: 3px solid var(--red); box-shadow: 0 16px 40px rgba(0,0,0,0.5); background: #1a1a1a; }
+    .map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    @media (max-width: 900px) {
+      .map-section { padding: 56px 20px; }
+      .map-inner { grid-template-columns: 1fr; gap: 28px; }
+      .map-frame { min-height: 300px; }
+    }
+  </style>
+  <style>
+    .areas-served { grid-column: 1 / -1; margin: 8px 0 0; padding-top: 36px; border-top: 1px solid #222; }
+    .areas-served h3 { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
+    .areas-served h3 em { color: var(--red); font-style: normal; }
+    .areas-served p { color: #999; font-size: 14px; line-height: 1.6; margin: 0; }
+  </style>
+  <style id="site-header-styles">
+    header.site-header { background: #000000; border-bottom: 1px solid #2a2a2a; position: sticky; top: 0; z-index: 1000; }
+    header.site-header .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 0; padding: 14px 48px; position: static; }
+    header.site-header .logo-wrap { display: flex; flex-direction: column; line-height: 1; order: 0; }
+    header.site-header .logo-wrap a { display: flex; line-height: 0; }
+    header.site-header .logo-wrap img { height: 84px; width: auto; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 80% 85% at center, #000 70%, transparent 100%); }
+    header.site-header nav { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: flex-start; gap: 36px; order: 0; width: auto; height: auto; padding: 0; margin: 0; background: none; border: 0; position: static; }
+    header.site-header nav a { color: var(--white, #fff); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; padding: 0; border: 0; transition: color 0.2s; }
+    header.site-header nav a:hover { color: var(--red); }
+    header.site-header .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; order: 0; }
+    header.site-header .btn-phone { display: flex; align-items: center; gap: 8px; border: 2px solid var(--red); border-radius: 4px; padding: 10px 20px; background: none; color: var(--white, #fff); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1px; transition: background 0.2s; }
+    header.site-header .btn-phone:hover { background: var(--red); }
+    header.site-header .btn-phone svg { flex-shrink: 0; }
+    header.site-header .header-address { display: flex; align-items: center; justify-content: flex-start; gap: 5px; padding: 0; background: none; border: 0; text-align: left; font-family: 'Open Sans', sans-serif; font-size: 12px; color: var(--gray, #aaaaaa); }
+    header.site-header .header-address svg { color: var(--red); flex-shrink: 0; }
+    @media (max-width: 768px) {
+      header.site-header .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; }
+      header.site-header nav { gap: 16px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo-wrap">
+      <a href="https://www.2shadytinting.com/index.html">
+        <img src="https://www.2shadytinting.com/img/2shady_logo.png" alt="2ShadyTinting" />
+      </a>
+    </div>
+    <nav>
+      <a href="https://www.2shadytinting.com/index.html">Home</a>
+      <a href="https://www.2shadytinting.com/services.html">Services</a>
+      <a href="https://www.2shadytinting.com/why-2shady.html">Why 2Shady</a>
+      <a href="https://www.2shadytinting.com/gallery.html">Gallery</a>
+      <a href="https://www.2shadytinting.com/reviews.html">Reviews</a>
+    </nav>
+    <div class="header-right">
+      <a href="tel:6178280887" class="btn-phone">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+        </svg>
+        (617) 828-0887
+      </a>
+      <div class="header-address">
+        <svg width="12" height="12" fill="#cc1111" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        516 Montello St Unit 1, Brockton, MA 02302
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="section-label">Schedule Your Visit</p>
+    <h1>Book an <em>Appointment</em></h1>
+    <p>Fill out the form below and we'll confirm your booking by phone or email within 24 hours.</p>
+    <div class="hero-divider"></div>
+  </div>
+</section>
+
+<!-- ═══ BOOKING SECTION ════════════════════════════════════ -->
+<section class="booking-section">
+  <div class="booking-inner">
+
+    <!-- ── FORM ── -->
+    <div class="form-card">
+      <h2>Request an <em>Appointment</em></h2>
+      <p>Fields marked <span style="color:var(--red)">*</span> are required. We'll reach out within 24 hours to confirm.</p>
+
+      <!-- Success overlay (shown after submit) -->
+      <div class="success-overlay" id="successOverlay"<?= $result && $result['success'] ? ' style="display:flex"' : '' ?>>
+        <div class="success-icon">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <h3>Appointment Requested!</h3>
+        <p id="successMsg"><?= $result && $result['success'] ? h($result['message']) : "Thanks! We'll be in touch shortly to confirm your appointment." ?></p>
+        <a href="https://www.2shadytinting.com/index.html" class="btn-back">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+
+      <!-- The form -->
+      <form id="appointmentForm"<?= $result && $result['success'] ? ' style="display:none"' : '' ?> method="post" action="<?= h($_SERVER['SCRIPT_NAME']) ?>" novalidate>
+        <!-- Spam trap: hidden from real visitors -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required value="<?= old('name') ?>" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(617) 000-0000" required value="<?= old('phone') ?>" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" value="<?= old('email') ?>" />
+        </div>
+
+        <hr class="form-divider" />
+
+        <div class="form-group">
+          <label for="service">Service Requested <span class="req">*</span></label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Select a service…</option>
+            <optgroup label="Window Tinting">
+              <option<?= sel('service', 'Car Window Tinting') ?>>Car Window Tinting</option>
+              <option<?= sel('service', 'Ceramic Film Tinting') ?>>Ceramic Film Tinting</option>
+              <option<?= sel('service', 'Glare Reduction') ?>>Glare Reduction</option>
+              <option<?= sel('service', 'UV Protection Film') ?>>UV Protection Film</option>
+              <option<?= sel('service', 'Commercial / Residential Tinting') ?>>Commercial / Residential Tinting</option>
+            </optgroup>
+            <optgroup label="Paint & Protection">
+              <option<?= sel('service', 'Ceramic Coating') ?>>Ceramic Coating</option>
+              <option<?= sel('service', 'Paint Correction') ?>>Paint Correction</option>
+              <option<?= sel('service', 'Auto Undercoating') ?>>Auto Undercoating</option>
+              <option<?= sel('service', 'Truck Undercoating') ?>>Truck Undercoating</option>
+            </optgroup>
+            <optgroup label="Auto Detailing">
+              <option<?= sel('service', 'Basic Detail') ?>>Basic Detail</option>
+              <option<?= sel('service', 'Standard Detail') ?>>Standard Detail</option>
+              <option<?= sel('service', 'Ultra Detail') ?>>Ultra Detail</option>
+            </optgroup>
+            <optgroup label="Vehicle Enhancement">
+              <option<?= sel('service', 'Vinyl Graphics / Wrap') ?>>Vinyl Graphics / Wrap</option>
+              <option<?= sel('service', 'Custom Decals') ?>>Custom Decals</option>
+              <option<?= sel('service', 'Automotive Rebadging') ?>>Automotive Rebadging</option>
+              <option<?= sel('service', 'Headlight Restoration') ?>>Headlight Restoration</option>
+              <option<?= sel('service', 'Wheel Repair & Refinishing') ?>>Wheel Repair & Refinishing</option>
+            </optgroup>
+            <optgroup label="Tech & Repair">
+              <option<?= sel('service', 'Remote Start Installation') ?>>Remote Start Installation</option>
+              <option<?= sel('service', 'Paintless Dent Removal') ?>>Paintless Dent Removal</option>
+            </optgroup>
+            <option value="Other / Not Sure"<?= sel('service', 'Other / Not Sure') ?>>Other / Not Sure</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="vehicle">Vehicle (Year, Make, Model)</label>
+          <input type="text" id="vehicle" name="vehicle" placeholder="e.g. 2021 Ford Mustang GT" value="<?= old('vehicle') ?>" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" value="<?= old('date') ?>" />
+          </div>
+          <div class="form-group">
+            <label for="time">Preferred Time</label>
+            <select id="time" name="time">
+              <option value="" disabled selected>Select a time…</option>
+              <option<?= sel('time', 'Morning (9am – 11am)') ?>>Morning (9am – 11am)</option>
+              <option<?= sel('time', 'Midday (11am – 1pm)') ?>>Midday (11am – 1pm)</option>
+              <option<?= sel('time', 'Afternoon (1pm – 3pm)') ?>>Afternoon (1pm – 3pm)</option>
+              <option<?= sel('time', 'Late Afternoon (3pm – 5pm)') ?>>Late Afternoon (3pm – 5pm)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" placeholder="Anything else we should know — shade preference, specific areas, questions…"><?= old('notes') ?></textarea>
+        </div>
+
+        <!-- Inline error feedback -->
+        <div class="form-feedback error" id="formError"<?= $result && !$result['success'] ? ' style="display:flex"' : '' ?>>
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+          <span id="errorMsg"><?= $result && !$result['success'] ? h($result['message']) : 'Please fill in all required fields.' ?></span>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="btnLabel">Book My Appointment</span>
+          <div class="spinner" id="spinner"></div>
+          <svg id="btnArrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+
+      <!-- Contact Info -->
+      <div class="info-card">
+        <h3>Contact <em>&amp; Location</em></h3>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01z"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Phone</div>
+            <div class="value"><a href="tel:6178280887">(617) 828-0887</a></div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Address</div>
+            <div class="value">516 Montello St Unit 1<br />Brockton, MA 02302</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="m22 6-10 7L2 6"/>
+            </svg>
+          </div>
+          <div class="info-text">
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:sales@2shadytinting.com">sales@2shadytinting.com</a></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hours -->
+      <div class="info-card">
+        <h3>Business <em>Hours</em></h3>
+        <div class="hours-row"><span class="day">Monday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Tuesday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Wednesday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Thursday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Friday</span><span class="open">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="open">10:00 AM – 4:00 PM</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="closed">Closed</span></div>
+      </div>
+
+      <!-- Trust -->
+      <div class="info-card">
+        <h3>Why <em>Book With Us</em></h3>
+        <ul class="trust-list">
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+            Licensed &amp; Insured
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Lifetime Warranty on All Tint
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Same-Day &amp; Next-Day Availability
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            4.9★ Google Rating
+          </li>
+          <li>
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Serving Brockton Since 1997
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <!-- GOOGLE REVIEWS -->
+  <style>
+    .greviews-section { background: #0a0a0a; border-top: 1px solid #222; padding: 72px 48px; }
+    .greviews-inner { max-width: 1280px; margin: 0 auto; }
+    .greviews-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+    .greviews-label { font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red, #cc1111); margin-bottom: 12px; }
+    .greviews-head h2 { font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; text-transform: uppercase; line-height: 1.05; color: #fff; margin: 0; }
+    .greviews-head h2 em { font-style: normal; color: var(--red, #cc1111); }
+    .greviews-link { color: #fff; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; border-bottom: 2px solid var(--red, #cc1111); padding-bottom: 4px; white-space: nowrap; }
+    .greviews-link:hover { color: var(--red, #cc1111); }
+    @media (max-width: 768px) { .greviews-section { padding: 56px 16px; } }
+  </style>
+  <section class="greviews-section" id="google-reviews" aria-label="Google reviews">
+    <div class="greviews-inner">
+      <div class="greviews-head">
+        <div>
+          <p class="greviews-label">Google Reviews</p>
+          <h2>What Our <em>Customers</em> Say</h2>
+        </div>
+        <a class="greviews-link" href="https://www.2shadytinting.com/reviews.html">See All Reviews &rarr;</a>
+      </div>
+      <!-- Elfsight Google Reviews | 2 Shady Tinting -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-c694fa84-f4b5-4073-a4ac-ffb69b8660a9" data-elfsight-app-lazy></div>
+    </div>
+  </section>
+
+  <!-- MAP / DIRECTIONS -->
+  <section class="map-section" id="location" aria-label="Location and directions">
+    <div class="map-inner">
+      <div class="map-info">
+        <p class="map-label">Find Us</p>
+        <h2>Visit <em>Our Shop</em></h2>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/></svg><div><strong>Address</strong>516 Montello St Unit 1, Brockton, MA 02302</div></div>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.4l3.5 2.1-.8 1.3L11 13V7h2v5.4z"/></svg><div><strong>Hours</strong>Mon–Fri: 9am – 6pm<br>Sat: 10am – 4pm<br>Sun: Closed</div></div>
+        <div class="map-detail"><svg class="map-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg><div><strong>Phone</strong><a href="tel:+16178280887">(617) 828-0887</a></div></div>
+        <div class="map-actions">
+          <a class="map-btn map-btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=2+Shady+Tinting+%26+Detailing,+516+Montello+St+Unit+1,+Brockton,+MA+02302" target="_blank" rel="noopener noreferrer">Get Directions</a>
+          <a class="map-btn map-btn-outline" href="https://maps.google.com/?cid=7861454423960029510" target="_blank" rel="noopener noreferrer">View on Google</a>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps?q=2+Shady+Tinting+%26+Detailing,+516+Montello+St+Unit+1,+Brockton,+MA+02302&output=embed" title="Map to 2Shady Tinting, 516 Montello St Unit 1, Brockton, MA 02302" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+      <div class="areas-served">
+        <h3>Areas <em>We Serve</em></h3>
+        <p>Proudly serving drivers in Brockton and surrounding communities.</p>
+      </div>
+    </div>
+  </section>
+
+<div class="footer-strip">
+  <div class="footer-top">
+    <div>
+      Locally Owned &amp; Operated
+      <span>•</span>
+      Premium Quality Guaranteed
+      <span>•</span>
+      Serving Brockton &amp; Surrounding Cities
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/2shadytinting" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/2shadytinting/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 2Shady Tinting. All rights reserved.</span>
+    <span>Designed by <a href="#" rel="noopener noreferrer">DrewBreezy Media</a></span>
+  </div>
+</div>
+
+<script>
+  // Set date input min to today
+  document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+  const form        = document.getElementById('appointmentForm');
+  const submitBtn   = document.getElementById('submitBtn');
+  const spinner     = document.getElementById('spinner');
+  const btnLabel    = document.getElementById('btnLabel');
+  const btnArrow    = document.getElementById('btnArrow');
+  const formError   = document.getElementById('formError');
+  const errorMsg    = document.getElementById('errorMsg');
+  const successOverlay = document.getElementById('successOverlay');
+  const successMsg  = document.getElementById('successMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Hide any previous error
+    formError.style.display = 'none';
+
+    // Client-side validation
+    const name    = form.name.value.trim();
+    const phone   = form.phone.value.trim();
+    const service = form.service.value;
+
+    if (!name || !phone || !service) {
+      errorMsg.textContent = 'Please fill in your name, phone number, and select a service.';
+      formError.style.display = 'flex';
+      formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+
+    // Loading state
+    submitBtn.disabled = true;
+    btnLabel.textContent = 'Sending…';
+    spinner.style.display = 'block';
+    btnArrow.style.display = 'none';
+
+    try {
+      const data = new FormData(form);
+      const res  = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      const json = await res.json();
+
+      if (json.success) {
+        // Show success overlay, hide form
+        successMsg.textContent = json.message;
+        form.style.display = 'none';
+        successOverlay.style.display = 'flex';
+        successOverlay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        errorMsg.textContent = json.message || 'Something went wrong. Please call us directly.';
+        formError.style.display = 'flex';
+        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Reset button
+        submitBtn.disabled = false;
+        btnLabel.textContent = 'Book My Appointment';
+        spinner.style.display = 'none';
+        btnArrow.style.display = 'block';
+      }
+    } catch (err) {
+      errorMsg.textContent = 'Network error. Please call us at (617) 828-0887.';
+      formError.style.display = 'flex';
+      submitBtn.disabled = false;
+      btnLabel.textContent = 'Book My Appointment';
+      spinner.style.display = 'none';
+      btnArrow.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>

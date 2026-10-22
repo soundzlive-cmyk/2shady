@@ -24,7 +24,7 @@ if (!$name || !$phone || !$service) {
     exit;
 }
 
-$to      = 'soundzlive@yahoo.com';
+$to      = 'sales@2shadytinting.com, soundzlive@yahoo.com';
 $subject = "New Appointment Request — $service | 2 Shady Tinting";
 
 $body  = "NEW APPOINTMENT REQUEST — 2 Shady Tinting\n";
