@@ -964,10 +964,10 @@
     }
 
     @media (max-width: 768px) {
-      .header-top { padding: 12px 20px; flex-wrap: nowrap; gap: 12px; position: relative; }
-      .logo-wrap { order: 1; }
-      .hamburger { display: flex; }
-      .header-right { order: 3; }
+      .header-top { padding: 12px 20px; flex-wrap: wrap; gap: 12px; position: relative; }
+      .logo-wrap { order: 1; flex: 1; display: flex; justify-content: center; }
+      .hamburger { display: flex; order: 0; }
+      .header-right { order: 2; }
       nav {
         display: none;
         order: 4;
