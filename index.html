@@ -748,6 +748,87 @@
       left: 0;
     }
 
+    /* ─── HOW WE DO IT ──────────────────────────────── */
+    .howwe-section {
+      background: var(--dark);
+      padding: 80px 48px;
+      border-top: 1px solid #1e1e1e;
+    }
+    .howwe-inner { max-width: 1200px; margin: 0 auto; }
+    .howwe-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .howwe-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+    .howwe-header p {
+      color: #aaa;
+      font-size: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .howwe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .howwe-card {
+      background: var(--dark2);
+      border: 1px solid #252525;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .howwe-card:hover { border-color: var(--red); transform: translateY(-4px); }
+    .howwe-video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9/16;
+      background: #000;
+      overflow: hidden;
+    }
+    .howwe-video-wrap video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .howwe-card-body { padding: 24px 28px 28px; }
+    .howwe-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: rgba(204,17,17,0.18);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .howwe-card-body h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .howwe-card-body p {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+      .howwe-section { padding: 56px 20px; }
+      .howwe-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── PPF & DETAILING HIGHLIGHT ─────────────────── */
     .highlight-section {
       background: var(--dark2);
@@ -1275,6 +1356,46 @@
           </div>
         </div>
       </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW WE DO IT ══════════════════════════════════ -->
+<section class="howwe-section">
+  <div class="howwe-inner">
+    <div class="howwe-header">
+      <p class="section-label">Our Process</p>
+      <h2>How We Do It</h2>
+      <p>A look inside the craft — the precision and care that goes into every vehicle we touch.</p>
+    </div>
+    <div class="howwe-grid">
+
+      <div class="howwe-card">
+        <div class="howwe-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="img/how-we-do-it-1.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="howwe-card-body">
+          <div class="howwe-num">01</div>
+          <h3>Precision Application</h3>
+          <p>Every install starts with meticulous surface prep and flawless film or tint placement — no shortcuts, no bubbles, no guesswork.</p>
+        </div>
+      </div>
+
+      <div class="howwe-card">
+        <div class="howwe-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="img/how-we-do-it-2.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="howwe-card-body">
+          <div class="howwe-num">02</div>
+          <h3>Detail-Level Finish</h3>
+          <p>We don't stop until the result is perfect. Clean edges, smooth finish, and a final inspection before your keys are handed back.</p>
+        </div>
+      </div>
 
     </div>
   </div>
