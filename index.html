@@ -2039,8 +2039,11 @@
     hideInput();
     addMsg("Perfect! Sending your request now…", 'sys');
 
+    // Google Apps Script redirects cross-origin POSTs — use no-cors and show
+    // success optimistically; the sheet write and emails still happen server-side.
     fetch('https://script.google.com/macros/s/AKfycbyyG5HlIjEonBaIRPC1Y9G_V2q2QKr1h_xkpK5Htxm16XA3s650rVCz_pBvcKiHR7oB/exec', {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name:    data.name,
@@ -2052,12 +2055,11 @@
         notes:   (data.date && data.notes) ? data.date + ' — ' + data.notes : (data.date || data.notes || '')
       })
     })
-    .then(function(r){ return r.json(); })
-    .then(function(json){
-      showResult(json.success, json.message);
+    .then(function(){
+      showResult(true, "Thanks, " + data.name + "! We’ll be in touch shortly to confirm your appointment.");
     })
     .catch(function(){
-      showResult(false, "Couldn't reach the server. Please call us or use the contact form.");
+      showResult(false, "Couldn’t reach the server. Please call us at (617) 828-0887.");
     });
   }
 
