@@ -2039,21 +2039,18 @@
     hideInput();
     addMsg("Perfect! Sending your request now…", 'sys');
 
-    var body = new URLSearchParams();
-    body.append('name',    data.name);
-    body.append('phone',   data.phone);
-    body.append('service', data.service);
-    body.append('email',   data.email  || '');
-    body.append('vehicle', data.vehicle || '');
-    body.append('date',    data.date   || '');
-    body.append('time',    data.time   || '');
-    body.append('notes',   (data.date && data.notes) ? data.date + ' — ' + data.notes : (data.date || data.notes || ''));
-    body.append('website', ''); // honeypot
-
-    fetch('https://www.2shadytinting.com/appointment.php', {
+    fetch('https://script.google.com/macros/s/AKfycbyyG5HlIjEonBaIRPC1Y9G_V2q2QKr1h_xkpK5Htxm16XA3s650rVCz_pBvcKiHR7oB/exec', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-      body: body.toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    data.name,
+        phone:   data.phone,
+        email:   data.email,
+        service: data.service,
+        vehicle: data.vehicle,
+        date:    data.date,
+        notes:   (data.date && data.notes) ? data.date + ' — ' + data.notes : (data.date || data.notes || '')
+      })
     })
     .then(function(r){ return r.json(); })
     .then(function(json){
