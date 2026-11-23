@@ -2039,21 +2039,22 @@
     hideInput();
     addMsg("Perfect! Sending your request now…", 'sys');
 
-    // Google Apps Script redirects cross-origin POSTs — use no-cors and show
-    // success optimistically; the sheet write and emails still happen server-side.
+    // Send as URL-encoded form data — required for no-cors mode with Apps Script
+    var formBody = new URLSearchParams({
+      name:    data.name    || '',
+      phone:   data.phone   || '',
+      email:   data.email   || '',
+      service: data.service || '',
+      vehicle: data.vehicle || '',
+      date:    data.date    || '',
+      notes:   (data.date && data.notes) ? data.date + ' — ' + data.notes : (data.date || data.notes || '')
+    }).toString();
+
     fetch('https://script.google.com/macros/s/AKfycbyyG5HlIjEonBaIRPC1Y9G_V2q2QKr1h_xkpK5Htxm16XA3s650rVCz_pBvcKiHR7oB/exec', {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name:    data.name,
-        phone:   data.phone,
-        email:   data.email,
-        service: data.service,
-        vehicle: data.vehicle,
-        date:    data.date,
-        notes:   (data.date && data.notes) ? data.date + ' — ' + data.notes : (data.date || data.notes || '')
-      })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formBody
     })
     .then(function(){
       showResult(true, "Thanks, " + data.name + "! We’ll be in touch shortly to confirm your appointment.");
