@@ -1575,7 +1575,10 @@
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 2Shady Tinting. All rights reserved.</span>
-    <span>Designed by <a href="#" rel="noopener noreferrer">DrewBreezy Media</a></span>
+    <span style="display:flex;align-items:center;gap:16px;">
+      <a href="admin.html" rel="noopener noreferrer">Admin</a>
+      <a href="#" rel="noopener noreferrer">DrewBreezy Media</a>
+    </span>
   </div>
 </div>
 
@@ -1679,6 +1682,73 @@
       });
     });
   })();
+</script>
+
+<!-- ═══ ANALYTICS TRACKING ════════════════════════════════════════════ -->
+<script>
+(function(){
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyyG5HlIjEonBaIRPC1Y9G_V2q2QKr1h_xkpK5Htxm16XA3s650rVCz_pBvcKiHR7oB/exec';
+
+  function getDevice() {
+    var ua = navigator.userAgent;
+    if (/tablet|ipad|playbook|silk/i.test(ua)) return 'Tablet';
+    if (/mobile|iphone|ipod|android|blackberry|opera mini|windows phone/i.test(ua)) return 'Mobile';
+    return 'Desktop';
+  }
+
+  function getBrowser() {
+    var ua = navigator.userAgent;
+    if (/edg\//i.test(ua))     return 'Edge';
+    if (/chrome/i.test(ua))    return 'Chrome';
+    if (/safari/i.test(ua))    return 'Safari';
+    if (/firefox/i.test(ua))   return 'Firefox';
+    if (/msie|trident/i.test(ua)) return 'IE';
+    return 'Other';
+  }
+
+  function getReferrer() {
+    var ref = document.referrer;
+    if (!ref) return 'Direct';
+    try {
+      var host = new URL(ref).hostname.replace(/^www\./, '');
+      if (/google/.test(host))    return 'Google';
+      if (/bing/.test(host))      return 'Bing';
+      if (/facebook|fb/.test(host)) return 'Facebook';
+      if (/instagram/.test(host)) return 'Instagram';
+      if (/2shadytinting/.test(host)) return 'Internal';
+      return host;
+    } catch(e) { return 'Other'; }
+  }
+
+  // Generate or retrieve session ID
+  var sid = sessionStorage.getItem('_sid');
+  if (!sid) { sid = Math.random().toString(36).slice(2) + Date.now().toString(36); sessionStorage.setItem('_sid', sid); }
+
+  // Fire page view
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      type:     'pageview',
+      page:     location.pathname + location.hash,
+      referrer: getReferrer(),
+      device:   getDevice(),
+      browser:  getBrowser(),
+      session:  sid
+    }).toString()
+  }).catch(function(){});
+
+  // Expose tracker for chat bubble to call on submission
+  window._trackLead = function(service) {
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ type: 'lead', service: service || '', session: sid }).toString()
+    }).catch(function(){});
+  };
+})();
 </script>
 
 <!-- ═══ INTAKE AGENT CHAT BUBBLE ══════════════════════════════════════ -->
@@ -2057,6 +2127,7 @@
       body: formBody
     })
     .then(function(){
+      if (window._trackLead) _trackLead(data.service);
       showResult(true, "Thanks, " + data.name + "! We’ll be in touch shortly to confirm your appointment.");
     })
     .catch(function(){
