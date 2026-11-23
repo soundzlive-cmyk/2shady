@@ -1724,7 +1724,21 @@
   var sid = sessionStorage.getItem('_sid');
   if (!sid) { sid = Math.random().toString(36).slice(2) + Date.now().toString(36); sessionStorage.setItem('_sid', sid); }
 
-  // Fire page view
+  var ref = getReferrer();
+  var dev = getDevice();
+  var br  = getBrowser();
+
+  // Write visit to localStorage for admin dashboard charts
+  try {
+    var stored = JSON.parse(localStorage.getItem('_2shady_analytics') || '{"visits":[]}');
+    if (!stored.visits) stored.visits = [];
+    stored.visits.push({ t: Date.now(), ref: ref, dev: dev, br: br, sid: sid });
+    // Keep last 500 visits max
+    if (stored.visits.length > 500) stored.visits = stored.visits.slice(-500);
+    localStorage.setItem('_2shady_analytics', JSON.stringify(stored));
+  } catch(e) {}
+
+  // Fire page view to Apps Script (Google Sheets)
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1732,9 +1746,9 @@
     body: new URLSearchParams({
       type:     'pageview',
       page:     location.pathname + location.hash,
-      referrer: getReferrer(),
-      device:   getDevice(),
-      browser:  getBrowser(),
+      referrer: ref,
+      device:   dev,
+      browser:  br,
       session:  sid
     }).toString()
   }).catch(function(){});
